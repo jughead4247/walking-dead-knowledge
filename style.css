@@ -664,3 +664,199 @@ h2 {
     }
 
 }
+
+/* ============================================================
+   QUIZ NAVIGATION
+   ============================================================ */
+
+.quiz-navigation {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    width: 100%;
+
+    margin-top: 28px;
+
+}
+
+
+/* SMALL NAVIGATION BUTTONS */
+
+.nav-btn {
+
+    width: auto;
+
+    min-width: 95px;
+
+    padding: 11px 17px;
+
+    border: 1px solid #444;
+
+    border-radius: 7px;
+
+    background: #222;
+
+    color: #ddd;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+}
+
+
+.nav-btn:hover:not(:disabled) {
+
+    background: #303030;
+
+    border-color: #666;
+
+    transform: translateY(-1px);
+
+}
+
+
+/* BACK BUTTON */
+
+#back-btn {
+
+    background: #171717;
+
+    color: #aaa;
+
+}
+
+
+#back-btn:hover:not(:disabled) {
+
+    background: #242424;
+
+    color: #ddd;
+
+}
+
+
+/* NEXT BUTTON */
+
+#next-btn {
+
+    background: #b51f1f;
+
+    border-color: #b51f1f;
+
+    color: white;
+
+}
+
+
+#next-btn:hover:not(:disabled) {
+
+    background: #d32929;
+
+    border-color: #d32929;
+
+}
+
+
+/* SUBMIT BUTTON */
+
+#submit-btn {
+
+    background: #b51f1f;
+
+    border-color: #b51f1f;
+
+    color: white;
+
+}
+
+
+#submit-btn:hover:not(:disabled) {
+
+    background: #d32929;
+
+    border-color: #d32929;
+
+}
+
+
+/* DISABLED SUBMIT */
+
+#submit-btn:disabled {
+
+    background: #222;
+
+    border-color: #333;
+
+    color: #666;
+
+    cursor: not-allowed;
+
+    opacity: 0.7;
+
+    transform: none;
+
+}
+
+
+/* DISABLED BACK */
+
+#back-btn:disabled {
+
+    background: #111;
+
+    border-color: #292929;
+
+    color: #444;
+
+    cursor: not-allowed;
+
+    opacity: 0.7;
+
+    transform: none;
+
+}
+
+
+/* SELECTED ANSWER */
+
+.answer-btn.selected {
+
+    background: #292929;
+
+    border-color: #b51f1f;
+
+    box-shadow:
+        0 0 0 1px rgba(181, 31, 31, 0.25);
+
+}
+
+
+/* MOBILE NAVIGATION */
+
+@media (max-width: 600px) {
+
+    .quiz-navigation {
+
+        margin-top: 22px;
+
+    }
+
+
+    .nav-btn {
+
+        min-width: 85px;
+
+        padding: 10px 13px;
+
+        font-size: 12px;
+
+    }
+
+}
