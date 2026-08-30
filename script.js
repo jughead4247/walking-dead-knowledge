@@ -566,11 +566,9 @@ function startQuiz() {
     showQuestion();
 }
 
-
+// =============================== 
+// SHOW QUESTION 
 // ===============================
-// SHOW QUESTION
-// ===============================
-
 function showQuestion() {
 
     const current = questions[currentQuestion];
@@ -584,10 +582,7 @@ function showQuestion() {
     answersContainer.innerHTML = "";
 
 
-    // ===============================
-    // PROGRESS
-    // ===============================
-
+    // Progress
     const progress =
         ((currentQuestion + 1) / questions.length) * 100;
 
@@ -595,10 +590,7 @@ function showQuestion() {
         `${progress}%`;
 
 
-    // ===============================
-    // ANSWERS
-    // ===============================
-
+    // Create answer buttons
     current.answers.forEach((answer, index) => {
 
         const button =
@@ -612,12 +604,21 @@ function showQuestion() {
             answer[0];
 
 
-        // Restore previous selection
+        // IMPORTANT:
+        // Restore previously selected answer
         if (
             selectedAnswers[currentQuestion] === index
         ) {
 
             button.classList.add("selected");
+
+            // Force visible selected appearance
+            button.style.backgroundColor = "#444";
+            button.style.borderColor = "#ffffff";
+            button.style.color = "#ffffff";
+            button.style.fontWeight = "700";
+            button.style.boxShadow =
+                "0 0 0 2px rgba(255,255,255,0.25)";
 
         }
 
@@ -644,22 +645,40 @@ function showQuestion() {
 
 function selectAnswer(answerIndex) {
 
-    // Store answer index
+    // Save selected answer
     selectedAnswers[currentQuestion] =
         answerIndex;
 
 
-    // Highlight selected answer
+    // Highlight answers
     const buttons =
         answersContainer.querySelectorAll(".answer");
 
 
     buttons.forEach((button, index) => {
 
-        button.classList.toggle(
-            "selected",
-            index === answerIndex
-        );
+        if (index === answerIndex) {
+
+            button.classList.add("selected");
+
+            button.style.backgroundColor = "#444";
+            button.style.borderColor = "#ffffff";
+            button.style.color = "#ffffff";
+            button.style.fontWeight = "700";
+            button.style.boxShadow =
+                "0 0 0 2px rgba(255,255,255,0.25)";
+
+        } else {
+
+            button.classList.remove("selected");
+
+            button.style.backgroundColor = "";
+            button.style.borderColor = "";
+            button.style.color = "";
+            button.style.fontWeight = "";
+            button.style.boxShadow = "";
+
+        }
 
     });
 
@@ -667,12 +686,7 @@ function selectAnswer(answerIndex) {
     updateNavigation();
 
 
-    // ===============================
-    // AUTOMATIC ADVANCEMENT
-    // ===============================
-
-    // Don't automatically advance
-    // from the final question.
+    // Automatic advancement
     if (
         currentQuestion <
         questions.length - 1
@@ -684,9 +698,8 @@ function selectAnswer(answerIndex) {
 
         setTimeout(() => {
 
-            // Only advance if the user
-            // is still on the same question
-            // and hasn't changed their answer.
+            // Don't advance if user has
+            // already moved elsewhere
             if (
                 currentQuestion ===
                     questionAtSelection &&
