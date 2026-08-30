@@ -504,25 +504,21 @@ const questions = [
 
 ];
 
-
-// ============================================================
-// QUIZ STATE
-// ============================================================
-
 let currentQuestion = 0;
 
-// Stores the selected answer for each question.
+// Stores the selected answer index for every question.
 // null = unanswered
 let selectedAnswers = new Array(questions.length).fill(null);
 
 
-// ============================================================
+// ===============================
 // ELEMENTS
-// ============================================================
+// ===============================
 
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
+const homeInfo = document.getElementById("home-info");
 
 const startButton = document.getElementById("start-btn");
 const restartButton = document.getElementById("restart-btn");
@@ -531,7 +527,6 @@ const challengeButton = document.getElementById("challenge-btn");
 
 const backButton = document.getElementById("back-btn");
 const nextButton = document.getElementById("next-btn");
-const submitButton = document.getElementById("submit-btn");
 
 const questionNumber = document.getElementById("question-number");
 const questionText = document.getElementById("question");
@@ -539,102 +534,61 @@ const answersContainer = document.getElementById("answers");
 const progressBar = document.getElementById("progress-bar");
 
 
-// ============================================================
+// ===============================
 // BUTTON EVENTS
-// ============================================================
+// ===============================
 
-if (startButton) {
-    startButton.addEventListener("click", startQuiz);
-}
+startButton.addEventListener("click", startQuiz);
+restartButton.addEventListener("click", restartQuiz);
+shareButton.addEventListener("click", shareResult);
+challengeButton.addEventListener("click", shareResult);
 
-if (restartButton) {
-    restartButton.addEventListener("click", restartQuiz);
-}
-
-if (shareButton) {
-    shareButton.addEventListener("click", shareResult);
-}
-
-if (challengeButton) {
-    challengeButton.addEventListener("click", shareResult);
-}
-
-if (backButton) {
-    backButton.addEventListener("click", goBack);
-}
-
-if (nextButton) {
-    nextButton.addEventListener("click", goNext);
-}
-
-if (submitButton) {
-    submitButton.addEventListener("click", submitQuiz);
-}
+backButton.addEventListener("click", goBack);
+nextButton.addEventListener("click", goNext);
 
 
-// ============================================================
+// ===============================
 // START QUIZ
-// ============================================================
+// ===============================
 
 function startQuiz() {
 
     currentQuestion = 0;
 
+    // Reset all answers
     selectedAnswers =
         new Array(questions.length).fill(null);
-
-    if (homeInfo) {
-        homeInfo.classList.add("hidden");
-    }
 
     startScreen.classList.add("hidden");
     resultScreen.classList.add("hidden");
     quizScreen.classList.remove("hidden");
 
-    showQuestion();
+    homeInfo.classList.add("hidden");
 
+    showQuestion();
 }
 
 
-// ============================================================
+// ===============================
 // SHOW QUESTION
-// ============================================================
+// ===============================
 
 function showQuestion() {
 
     const current = questions[currentQuestion];
 
-    if (!current) {
-        return;
-    }
-
-
-    // ----------------------------------------
-    // QUESTION NUMBER
-    // ----------------------------------------
-
     questionNumber.textContent =
         `Question ${currentQuestion + 1} of ${questions.length}`;
-
-
-    // ----------------------------------------
-    // QUESTION
-    // ----------------------------------------
 
     questionText.textContent =
         current.question;
 
-
-    // ----------------------------------------
-    // CLEAR OLD ANSWERS
-    // ----------------------------------------
-
     answersContainer.innerHTML = "";
 
 
-    // ----------------------------------------
+    // ===============================
     // PROGRESS
-    // ----------------------------------------
+    // ===============================
 
     const progress =
         ((currentQuestion + 1) / questions.length) * 100;
@@ -643,29 +597,24 @@ function showQuestion() {
         `${progress}%`;
 
 
-    // ----------------------------------------
-    // CREATE ANSWERS
-    // ----------------------------------------
+    // ===============================
+    // ANSWERS
+    // ===============================
 
     current.answers.forEach((answer, index) => {
 
         const button =
             document.createElement("button");
 
-        button.className =
-            "answer";
+        button.className = "answer";
 
-        button.type =
-            "button";
+        button.type = "button";
 
         button.textContent =
             answer[0];
 
 
-        // ------------------------------------
-        // RESTORE PREVIOUS ANSWER
-        // ------------------------------------
-
+        // Restore previous selection
         if (
             selectedAnswers[currentQuestion] === index
         ) {
@@ -674,10 +623,6 @@ function showQuestion() {
 
         }
 
-
-        // ------------------------------------
-        // ANSWER CLICK
-        // ------------------------------------
 
         button.addEventListener("click", () => {
 
@@ -691,37 +636,25 @@ function showQuestion() {
     });
 
 
-    // ----------------------------------------
-    // UPDATE NAVIGATION
-    // ----------------------------------------
-
     updateNavigation();
-
 }
 
 
-// ============================================================
+// ===============================
 // SELECT ANSWER
-// ============================================================
+// ===============================
 
 function selectAnswer(answerIndex) {
 
-    // Store the ANSWER INDEX.
-    //
-    // We do NOT add the points here.
-    // This prevents duplicate scoring when the user
-    // goes Back and changes an answer.
-
+    // Store answer index
     selectedAnswers[currentQuestion] =
         answerIndex;
 
 
-    // ----------------------------------------
-    // HIGHLIGHT SELECTED ANSWER
-    // ----------------------------------------
-
+    // Highlight selected answer
     const buttons =
         answersContainer.querySelectorAll(".answer");
+
 
     buttons.forEach((button, index) => {
 
@@ -733,17 +666,15 @@ function selectAnswer(answerIndex) {
     });
 
 
-    // Update buttons immediately.
     updateNavigation();
 
 
-    // ----------------------------------------
+    // ===============================
     // AUTOMATIC ADVANCEMENT
-    // ----------------------------------------
+    // ===============================
 
-    // Do NOT automatically advance from the
-    // final question.
-
+    // Don't automatically advance
+    // from the final question.
     if (
         currentQuestion <
         questions.length - 1
@@ -755,12 +686,16 @@ function selectAnswer(answerIndex) {
 
         setTimeout(() => {
 
-            // Only advance if the user is still
-            // on the same question.
-
+            // Only advance if the user
+            // is still on the same question
+            // and hasn't changed their answer.
             if (
-                currentQuestion === questionAtSelection &&
-                selectedAnswers[questionAtSelection] === answerIndex
+                currentQuestion ===
+                    questionAtSelection &&
+
+                selectedAnswers[
+                    questionAtSelection
+                ] === answerIndex
             ) {
 
                 currentQuestion++;
@@ -772,19 +707,38 @@ function selectAnswer(answerIndex) {
         }, 350);
 
     }
-
 }
 
 
-// ============================================================
+// ===============================
 // NEXT BUTTON
-// ============================================================
+// ===============================
 
 function goNext() {
 
-    // Cannot move forward without answering
-    // the current question.
+    // Final question = submit
+    if (
+        currentQuestion ===
+        questions.length - 1
+    ) {
 
+        const allAnswered =
+            selectedAnswers.every(
+                answer => answer !== null
+            );
+
+
+        if (allAnswered) {
+
+            showResult();
+
+        }
+
+        return;
+    }
+
+
+    // Don't allow unanswered question
     if (
         selectedAnswers[currentQuestion] === null
     ) {
@@ -794,72 +748,40 @@ function goNext() {
     }
 
 
-    // ----------------------------------------
-    // NORMAL NEXT
-    // ----------------------------------------
+    currentQuestion++;
 
-    if (
-        currentQuestion <
-        questions.length - 1
-    ) {
-
-        currentQuestion++;
-
-        showQuestion();
-
-        return;
-
-    }
-
-
-    // ----------------------------------------
-    // SAFETY FALLBACK
-    // ----------------------------------------
-
-    submitQuiz();
-
+    showQuestion();
 }
 
 
-// ============================================================
+// ===============================
 // BACK BUTTON
-// ============================================================
+// ===============================
 
 function goBack() {
 
-    if (currentQuestion <= 0) {
-        return;
+    if (currentQuestion > 0) {
+
+        currentQuestion--;
+
+        showQuestion();
+
     }
-
-    currentQuestion--;
-
-    // IMPORTANT:
-    // We do NOT erase selectedAnswers.
-    //
-    // showQuestion() will automatically restore
-    // the previous selected answer.
-
-    showQuestion();
-
 }
 
 
-// ============================================================
-// UPDATE NAVIGATION
-// ============================================================
+// ===============================
+// NAVIGATION
+// ===============================
 
 function updateNavigation() {
-
-    if (!backButton || !nextButton || !submitButton) {
-        return;
-    }
-
 
     const isFirst =
         currentQuestion === 0;
 
     const isLast =
-        currentQuestion === questions.length - 1;
+        currentQuestion ===
+        questions.length - 1;
 
 
     const currentAnswered =
@@ -872,179 +794,120 @@ function updateNavigation() {
         );
 
 
-    // ----------------------------------------
+    // ===============================
     // BACK
-    // ----------------------------------------
+    // ===============================
 
     backButton.disabled =
         isFirst;
 
 
-    // ----------------------------------------
+    // ===============================
     // FINAL QUESTION
-    // ----------------------------------------
+    // ===============================
 
     if (isLast) {
 
-        // Hide Next
-        nextButton.classList.add("hidden");
+        nextButton.textContent =
+            "SUBMIT";
 
 
-        // Show Submit
-        submitButton.classList.remove("hidden");
-
-
-        // Submit is only enabled when ALL
-        // questions have been answered.
-
-        submitButton.disabled =
+        nextButton.disabled =
             !allAnswered;
 
 
         if (allAnswered) {
 
-            submitButton.textContent =
-                "SUBMIT";
+            nextButton.classList.add("submit-ready");
 
         } else {
 
-            submitButton.textContent =
-                "Answer All Questions";
+            nextButton.classList.remove(
+                "submit-ready"
+            );
 
         }
 
-        return;
+    } else {
 
-    }
-
-
-    // ----------------------------------------
-    // NORMAL QUESTIONS
-    // ----------------------------------------
-
-    submitButton.classList.add("hidden");
-
-    nextButton.classList.remove("hidden");
+        nextButton.textContent =
+            "Next →";
 
 
-    nextButton.disabled =
-        !currentAnswered;
-
-}
+        nextButton.disabled =
+            !currentAnswered;
 
 
-// ============================================================
-// SUBMIT QUIZ
-// ============================================================
-
-function submitQuiz() {
-
-    // Absolute protection.
-    // Never calculate results until every
-    // question has an answer.
-
-    const allAnswered =
-        selectedAnswers.every(
-            answer => answer !== null
+        nextButton.classList.remove(
+            "submit-ready"
         );
 
-
-    if (!allAnswered) {
-
-        submitButton.textContent =
-            "Answer All Questions";
-
-        return;
-
     }
-
-
-    showResult();
-
 }
 
 
-// ============================================================
-// CALCULATE FINAL SCORE
-// ============================================================
+// ===============================
+// CALCULATE SCORE
+// ===============================
 
-function calculateFinalScore() {
+function calculateScore() {
 
-    let totalScore = 0;
+    let score = 0;
 
 
     selectedAnswers.forEach(
         (answerIndex, questionIndex) => {
 
             if (answerIndex === null) {
+
                 return;
+
             }
 
 
-            const answer =
-                questions[questionIndex]
-                    .answers[answerIndex];
-
-
-            // answer[1] is the point value.
-
-            totalScore +=
-                answer[1];
+            score +=
+                questions[
+                    questionIndex
+                ].answers[
+                    answerIndex
+                ][1];
 
         }
     );
 
 
-    return totalScore;
-
+    return score;
 }
 
 
-// ============================================================
+// ===============================
 // SHOW RESULT
-// ============================================================
+// ===============================
 
 function showResult() {
 
+    // Calculate score ONLY here
     const score =
-        calculateFinalScore();
+        calculateScore();
 
 
-    // ----------------------------------------
-    // RESULT SCREENS
-    // ----------------------------------------
-
-    if (homeInfo) {
-        homeInfo.classList.remove("hidden");
-    }
+    homeInfo.classList.remove("hidden");
 
     quizScreen.classList.add("hidden");
 
     resultScreen.classList.remove("hidden");
 
 
-    // ----------------------------------------
-    // SCORE
-    // ----------------------------------------
-
     document.getElementById(
         "final-score"
     ).textContent = score;
 
-
-    // ----------------------------------------
-    // RESULT VARIABLES
-    // ----------------------------------------
 
     let title;
     let description;
     let knowledge;
     let icon;
 
-
-    // ----------------------------------------
-    // RESULT LEVELS
-    // ----------------------------------------
 
     if (score <= 20) {
 
@@ -1134,57 +997,50 @@ function showResult() {
 
         icon =
             "🧠";
-
     }
 
 
-    // ----------------------------------------
-    // WRITE RESULT
-    // ----------------------------------------
+    document.getElementById(
+        "result-title"
+    ).textContent = title;
 
-    const resultTitle =
-        document.getElementById("result-title");
 
-    const resultDescription =
-        document.getElementById("result-description");
+    document.getElementById(
+        "result-description"
+    ).textContent = description;
 
-    const knowledgeLevel =
-        document.getElementById("knowledge-level");
+
+    document.getElementById(
+        "knowledge-level"
+    ).textContent = knowledge;
+
 
     const resultIcon =
         document.getElementById("result-icon");
 
 
-    if (resultTitle) {
-        resultTitle.textContent =
-            title;
-    }
-
-    if (resultDescription) {
-        resultDescription.textContent =
-            description;
-    }
-
-    if (knowledgeLevel) {
-        knowledgeLevel.textContent =
-            knowledge;
-    }
-
     if (resultIcon) {
+
         resultIcon.textContent =
             icon;
+
     }
 
 
     progressBar.style.width =
         "100%";
 
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 
-// ============================================================
+// ===============================
 // RESTART QUIZ
-// ============================================================
+// ===============================
 
 function restartQuiz() {
 
@@ -1200,10 +1056,7 @@ function restartQuiz() {
 
     startScreen.classList.remove("hidden");
 
-
-    if (homeInfo) {
-        homeInfo.classList.remove("hidden");
-    }
+    homeInfo.classList.remove("hidden");
 
 
     progressBar.style.width =
@@ -1214,13 +1067,12 @@ function restartQuiz() {
         top: 0,
         behavior: "smooth"
     });
-
 }
 
 
-// ============================================================
+// ===============================
 // SHARE RESULT
-// ============================================================
+// ===============================
 
 async function shareResult() {
 
@@ -1292,12 +1144,4 @@ async function shareResult() {
         );
 
     }
-
 }
-
-
-// ============================================================
-// INITIAL NAVIGATION STATE
-// ============================================================
-
-updateNavigation();
