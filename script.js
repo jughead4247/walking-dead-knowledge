@@ -505,9 +505,23 @@ const questions = [
 ];
 
 
-let currentQuestion = 0;
-let score = 0;
+// ============================================================
+// QUIZ STATE
+// ============================================================
 
+let currentQuestion = 0;
+
+// Stores the selected answer INDEX for every question.
+// null = unanswered.
+//
+// This is important because we calculate the score ONLY when
+// the user submits the quiz.
+let selectedAnswers = new Array(questions.length).fill(null);
+
+
+// ============================================================
+// ELEMENTS
+// ============================================================
 
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
@@ -518,96 +532,512 @@ const restartButton = document.getElementById("restart-btn");
 const shareButton = document.getElementById("share-btn");
 const challengeButton = document.getElementById("challenge-btn");
 
+const backButton = document.getElementById("back-btn");
+const nextButton = document.getElementById("next-btn");
+const submitButton = document.getElementById("submit-btn");
+
 const questionNumber = document.getElementById("question-number");
 const questionText = document.getElementById("question");
 const answersContainer = document.getElementById("answers");
 const progressBar = document.getElementById("progress-bar");
 
 
-startButton.addEventListener("click", startQuiz);
-restartButton.addEventListener("click", restartQuiz);
-shareButton.addEventListener("click", shareResult);
-challengeButton.addEventListener("click", shareResult);
+// ============================================================
+// BUTTON EVENTS
+// ============================================================
 
+if (startButton) {
+    startButton.addEventListener("click", startQuiz);
+}
+
+if (restartButton) {
+    restartButton.addEventListener("click", restartQuiz);
+}
+
+if (shareButton) {
+    shareButton.addEventListener("click", shareResult);
+}
+
+if (challengeButton) {
+    challengeButton.addEventListener("click", shareResult);
+}
+
+if (backButton) {
+    backButton.addEventListener("click", goBack);
+}
+
+if (nextButton) {
+    nextButton.addEventListener("click", goNext);
+}
+
+if (submitButton) {
+    submitButton.addEventListener("click", submitQuiz);
+}
+
+
+// ============================================================
+// START QUIZ
+// ============================================================
 
 function startQuiz() {
 
-    homeInfo.classList.add("hidden");
-
     currentQuestion = 0;
-    score = 0;
+
+    selectedAnswers =
+        new Array(questions.length).fill(null);
+
+    if (homeInfo) {
+        homeInfo.classList.add("hidden");
+    }
 
     startScreen.classList.add("hidden");
     resultScreen.classList.add("hidden");
     quizScreen.classList.remove("hidden");
 
     showQuestion();
+
 }
 
+
+// ============================================================
+// SHOW QUESTION
+// ============================================================
 
 function showQuestion() {
 
     const current = questions[currentQuestion];
 
+    if (!current) {
+        return;
+    }
+
+
+    // ----------------------------------------
+    // QUESTION NUMBER
+    // ----------------------------------------
+
     questionNumber.textContent =
         `Question ${currentQuestion + 1} of ${questions.length}`;
 
-    questionText.textContent = current.question;
+
+    // ----------------------------------------
+    // QUESTION
+    // ----------------------------------------
+
+    questionText.textContent =
+        current.question;
+
+
+    // ----------------------------------------
+    // CLEAR OLD ANSWERS
+    // ----------------------------------------
 
     answersContainer.innerHTML = "";
+
+
+    // ----------------------------------------
+    // PROGRESS
+    // ----------------------------------------
 
     const progress =
         ((currentQuestion + 1) / questions.length) * 100;
 
-    progressBar.style.width = `${progress}%`;
+    progressBar.style.width =
+        `${progress}%`;
 
 
-    current.answers.forEach((answer) => {
+    // ----------------------------------------
+    // CREATE ANSWERS
+    // ----------------------------------------
 
-        const button = document.createElement("button");
+    current.answers.forEach((answer, index) => {
 
-        button.className = "answer";
+        const button =
+            document.createElement("button");
 
-        button.textContent = answer[0];
+        button.className =
+            "answer";
+
+        button.type =
+            "button";
+
+        button.textContent =
+            answer[0];
+
+
+        // ------------------------------------
+        // RESTORE PREVIOUS ANSWER
+        // ------------------------------------
+
+        if (
+            selectedAnswers[currentQuestion] === index
+        ) {
+
+            button.classList.add("selected");
+
+        }
+
+
+        // ------------------------------------
+        // ANSWER CLICK
+        // ------------------------------------
 
         button.addEventListener("click", () => {
-            selectAnswer(answer[1]);
+
+            selectAnswer(index);
+
         });
+
 
         answersContainer.appendChild(button);
 
     });
+
+
+    // ----------------------------------------
+    // UPDATE NAVIGATION
+    // ----------------------------------------
+
+    updateNavigation();
+
 }
 
 
-function selectAnswer(points) {
+// ============================================================
+// SELECT ANSWER
+// ============================================================
 
-    score += points;
+function selectAnswer(answerIndex) {
 
-    currentQuestion++;
+    // Store the ANSWER INDEX.
+    //
+    // We do NOT add the points here.
+    // This prevents duplicate scoring when the user
+    // goes Back and changes an answer.
 
-    if (currentQuestion < questions.length) {
+    selectedAnswers[currentQuestion] =
+        answerIndex;
+
+
+    // ----------------------------------------
+    // HIGHLIGHT SELECTED ANSWER
+    // ----------------------------------------
+
+    const buttons =
+        answersContainer.querySelectorAll(".answer");
+
+    buttons.forEach((button, index) => {
+
+        button.classList.toggle(
+            "selected",
+            index === answerIndex
+        );
+
+    });
+
+
+    // Update buttons immediately.
+    updateNavigation();
+
+
+    // ----------------------------------------
+    // AUTOMATIC ADVANCEMENT
+    // ----------------------------------------
+
+    // Do NOT automatically advance from the
+    // final question.
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
+        const questionAtSelection =
+            currentQuestion;
+
+
+        setTimeout(() => {
+
+            // Only advance if the user is still
+            // on the same question.
+
+            if (
+                currentQuestion === questionAtSelection &&
+                selectedAnswers[questionAtSelection] === answerIndex
+            ) {
+
+                currentQuestion++;
+
+                showQuestion();
+
+            }
+
+        }, 350);
+
+    }
+
+}
+
+
+// ============================================================
+// NEXT BUTTON
+// ============================================================
+
+function goNext() {
+
+    // Cannot move forward without answering
+    // the current question.
+
+    if (
+        selectedAnswers[currentQuestion] === null
+    ) {
+
+        return;
+
+    }
+
+
+    // ----------------------------------------
+    // NORMAL NEXT
+    // ----------------------------------------
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
+        currentQuestion++;
 
         showQuestion();
 
-    } else {
-
-        showResult();
+        return;
 
     }
+
+
+    // ----------------------------------------
+    // SAFETY FALLBACK
+    // ----------------------------------------
+
+    submitQuiz();
+
 }
 
 
+// ============================================================
+// BACK BUTTON
+// ============================================================
+
+function goBack() {
+
+    if (currentQuestion <= 0) {
+        return;
+    }
+
+    currentQuestion--;
+
+    // IMPORTANT:
+    // We do NOT erase selectedAnswers.
+    //
+    // showQuestion() will automatically restore
+    // the previous selected answer.
+
+    showQuestion();
+
+}
+
+
+// ============================================================
+// UPDATE NAVIGATION
+// ============================================================
+
+function updateNavigation() {
+
+    if (!backButton || !nextButton || !submitButton) {
+        return;
+    }
+
+
+    const isFirst =
+        currentQuestion === 0;
+
+    const isLast =
+        currentQuestion === questions.length - 1;
+
+
+    const currentAnswered =
+        selectedAnswers[currentQuestion] !== null;
+
+
+    const allAnswered =
+        selectedAnswers.every(
+            answer => answer !== null
+        );
+
+
+    // ----------------------------------------
+    // BACK
+    // ----------------------------------------
+
+    backButton.disabled =
+        isFirst;
+
+
+    // ----------------------------------------
+    // FINAL QUESTION
+    // ----------------------------------------
+
+    if (isLast) {
+
+        // Hide Next
+        nextButton.classList.add("hidden");
+
+
+        // Show Submit
+        submitButton.classList.remove("hidden");
+
+
+        // Submit is only enabled when ALL
+        // questions have been answered.
+
+        submitButton.disabled =
+            !allAnswered;
+
+
+        if (allAnswered) {
+
+            submitButton.textContent =
+                "SUBMIT";
+
+        } else {
+
+            submitButton.textContent =
+                "Answer All Questions";
+
+        }
+
+        return;
+
+    }
+
+
+    // ----------------------------------------
+    // NORMAL QUESTIONS
+    // ----------------------------------------
+
+    submitButton.classList.add("hidden");
+
+    nextButton.classList.remove("hidden");
+
+
+    nextButton.disabled =
+        !currentAnswered;
+
+}
+
+
+// ============================================================
+// SUBMIT QUIZ
+// ============================================================
+
+function submitQuiz() {
+
+    // Absolute protection.
+    // Never calculate results until every
+    // question has an answer.
+
+    const allAnswered =
+        selectedAnswers.every(
+            answer => answer !== null
+        );
+
+
+    if (!allAnswered) {
+
+        submitButton.textContent =
+            "Answer All Questions";
+
+        return;
+
+    }
+
+
+    showResult();
+
+}
+
+
+// ============================================================
+// CALCULATE FINAL SCORE
+// ============================================================
+
+function calculateFinalScore() {
+
+    let totalScore = 0;
+
+
+    selectedAnswers.forEach(
+        (answerIndex, questionIndex) => {
+
+            if (answerIndex === null) {
+                return;
+            }
+
+
+            const answer =
+                questions[questionIndex]
+                    .answers[answerIndex];
+
+
+            // answer[1] is the point value.
+
+            totalScore +=
+                answer[1];
+
+        }
+    );
+
+
+    return totalScore;
+
+}
+
+
+// ============================================================
+// SHOW RESULT
+// ============================================================
+
 function showResult() {
 
-    homeInfo.classList.remove("hidden");
+    const score =
+        calculateFinalScore();
+
+
+    // ----------------------------------------
+    // RESULT SCREENS
+    // ----------------------------------------
+
+    if (homeInfo) {
+        homeInfo.classList.remove("hidden");
+    }
 
     quizScreen.classList.add("hidden");
 
     resultScreen.classList.remove("hidden");
 
-    document.getElementById("final-score").textContent = score;
 
+    // ----------------------------------------
+    // SCORE
+    // ----------------------------------------
+
+    document.getElementById(
+        "final-score"
+    ).textContent = score;
+
+
+    // ----------------------------------------
+    // RESULT VARIABLES
+    // ----------------------------------------
 
     let title;
     let description;
@@ -615,110 +1045,204 @@ function showResult() {
     let icon;
 
 
+    // ----------------------------------------
+    // RESULT LEVELS
+    // ----------------------------------------
+
     if (score <= 20) {
 
-        title = "🧟 Walker-Level Knowledge";
+        title =
+            "🧟 Walker-Level Knowledge";
 
         description =
             "You might recognize Rick and Daryl, but most of the details of the apocalypse have escaped you.";
 
-        knowledge = "Casual Viewer";
+        knowledge =
+            "Casual Viewer";
 
-        icon = "🧟";
+        icon =
+            "🧟";
+
 
     } else if (score <= 40) {
 
-        title = "🏚️ Alexandria Beginner";
+        title =
+            "🏚️ Alexandria Beginner";
 
         description =
             "You've watched the show, but there are plenty of characters, places and events you could still forget.";
 
-        knowledge = "Casual Fan";
+        knowledge =
+            "Casual Fan";
 
-        icon = "🏚️";
+        icon =
+            "🏚️";
+
 
     } else if (score <= 60) {
 
-        title = "🔥 Survivor";
+        title =
+            "🔥 Survivor";
 
         description =
             "You know the major characters and events, but some of the deeper Walking Dead trivia caught you out.";
 
-        knowledge = "Good Fan";
+        knowledge =
+            "Good Fan";
 
-        icon = "🔥";
+        icon =
+            "🔥";
+
 
     } else if (score <= 80) {
 
-        title = "⚔️ Seasoned Survivor";
+        title =
+            "⚔️ Seasoned Survivor";
 
         description =
             "You've spent a lot of time in the apocalypse. You remember most of the important details and many of the obscure ones.";
 
-        knowledge = "Dedicated Fan";
+        knowledge =
+            "Dedicated Fan";
 
-        icon = "⚔️";
+        icon =
+            "⚔️";
+
 
     } else if (score <= 94) {
 
-        title = "👑 Walking Dead Expert";
+        title =
+            "👑 Walking Dead Expert";
 
         description =
             "Impressive. You remember characters, communities, groups and details that many fans have forgotten.";
 
-        knowledge = "Expert Fan";
+        knowledge =
+            "Expert Fan";
 
-        icon = "👑";
+        icon =
+            "👑";
+
 
     } else {
 
-        title = "🧠 Walking Dead Encyclopedia";
+        title =
+            "🧠 Walking Dead Encyclopedia";
 
         description =
             "You don't just remember the show — you remember the tiny details. You could probably survive a Walking Dead trivia convention.";
 
-        knowledge = "Ultimate Fan";
+        knowledge =
+            "Ultimate Fan";
 
-        icon = "🧠";
+        icon =
+            "🧠";
+
     }
 
 
-    document.getElementById("result-title").textContent = title;
+    // ----------------------------------------
+    // WRITE RESULT
+    // ----------------------------------------
 
-    document.getElementById("result-description").textContent =
-        description;
+    const resultTitle =
+        document.getElementById("result-title");
 
-    document.getElementById("knowledge-level").textContent =
-        knowledge;
+    const resultDescription =
+        document.getElementById("result-description");
 
-    document.getElementById("result-icon").textContent =
-        icon;
+    const knowledgeLevel =
+        document.getElementById("knowledge-level");
 
-    progressBar.style.width = "100%";
+    const resultIcon =
+        document.getElementById("result-icon");
+
+
+    if (resultTitle) {
+        resultTitle.textContent =
+            title;
+    }
+
+    if (resultDescription) {
+        resultDescription.textContent =
+            description;
+    }
+
+    if (knowledgeLevel) {
+        knowledgeLevel.textContent =
+            knowledge;
+    }
+
+    if (resultIcon) {
+        resultIcon.textContent =
+            icon;
+    }
+
+
+    progressBar.style.width =
+        "100%";
+
 }
 
+
+// ============================================================
+// RESTART QUIZ
+// ============================================================
 
 function restartQuiz() {
 
+    currentQuestion = 0;
+
+    selectedAnswers =
+        new Array(questions.length).fill(null);
+
+
     resultScreen.classList.add("hidden");
+
+    quizScreen.classList.add("hidden");
 
     startScreen.classList.remove("hidden");
 
-    homeInfo.classList.remove("hidden");
+
+    if (homeInfo) {
+        homeInfo.classList.remove("hidden");
+    }
+
+
+    progressBar.style.width =
+        "0%";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
 
+
+// ============================================================
+// SHARE RESULT
+// ============================================================
 
 async function shareResult() {
 
     const title =
-        document.getElementById("result-title").textContent;
+        document.getElementById(
+            "result-title"
+        ).textContent;
+
 
     const knowledge =
-        document.getElementById("knowledge-level").textContent;
+        document.getElementById(
+            "knowledge-level"
+        ).textContent;
+
 
     const finalScore =
-        document.getElementById("final-score").textContent;
+        document.getElementById(
+            "final-score"
+        ).textContent;
 
 
     const shareText =
@@ -730,11 +1254,14 @@ async function shareResult() {
 
     const shareData = {
 
-        title: "The Walking Dead Quiz",
+        title:
+            "The Walking Dead Quiz",
 
-        text: shareText,
+        text:
+            shareText,
 
-        url: "https://apocalypsequizzes.com/walking-dead-quiz/"
+        url:
+            "https://apocalypsequizzes.com/walking-dead-quiz/"
 
     };
 
@@ -743,7 +1270,9 @@ async function shareResult() {
 
         if (navigator.share) {
 
-            await navigator.share(shareData);
+            await navigator.share(
+                shareData
+            );
 
         } else {
 
@@ -751,6 +1280,7 @@ async function shareResult() {
                 shareText +
                 "\n\nhttps://apocalypsequizzes.com/walking-dead-quiz/"
             );
+
 
             alert(
                 "Your result has been copied! You can paste it anywhere."
@@ -760,8 +1290,17 @@ async function shareResult() {
 
     } catch (error) {
 
-        console.log("Sharing cancelled.");
+        console.log(
+            "Sharing cancelled."
+        );
 
     }
 
 }
+
+
+// ============================================================
+// INITIAL NAVIGATION STATE
+// ============================================================
+
+updateNavigation();
