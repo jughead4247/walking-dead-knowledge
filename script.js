@@ -1,5 +1,3 @@
-const homeInfo = document.getElementById("home-info");
-
 const questions = [
 
     {
@@ -704,7 +702,7 @@ function selectAnswer(answerIndex) {
 
             }
 
-        }, 350);
+        }, 150);
 
     }
 }
