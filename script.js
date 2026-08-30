@@ -511,11 +511,8 @@ const questions = [
 
 let currentQuestion = 0;
 
-// Stores the selected answer INDEX for every question.
-// null = unanswered.
-//
-// This is important because we calculate the score ONLY when
-// the user submits the quiz.
+// Stores the selected answer for each question.
+// null = unanswered
 let selectedAnswers = new Array(questions.length).fill(null);
 
 
