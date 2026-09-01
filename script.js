@@ -504,45 +504,93 @@ const questions = [
 
 let currentQuestion = 0;
 
-// Stores the selected answer index for every question.
-// null = unanswered
-let selectedAnswers = new Array(questions.length).fill(null);
+let selectedAnswers =
+    new Array(questions.length).fill(null);
 
 
 // ===============================
 // ELEMENTS
 // ===============================
 
-const startScreen = document.getElementById("start-screen");
-const quizScreen = document.getElementById("quiz-screen");
-const resultScreen = document.getElementById("result-screen");
-const homeInfo = document.getElementById("home-info");
+const startScreen =
+    document.getElementById("start-screen");
 
-const startButton = document.getElementById("start-btn");
-const restartButton = document.getElementById("restart-btn");
-const shareButton = document.getElementById("share-btn");
-const challengeButton = document.getElementById("challenge-btn");
+const quizScreen =
+    document.getElementById("quiz-screen");
 
-const backButton = document.getElementById("back-btn");
-const nextButton = document.getElementById("next-btn");
+const resultScreen =
+    document.getElementById("result-screen");
 
-const questionNumber = document.getElementById("question-number");
-const questionText = document.getElementById("question");
-const answersContainer = document.getElementById("answers");
-const progressBar = document.getElementById("progress-bar");
+const homeInfo =
+    document.getElementById("home-info");
+
+
+const startButton =
+    document.getElementById("start-btn");
+
+const restartButton =
+    document.getElementById("restart-btn");
+
+const shareButton =
+    document.getElementById("share-btn");
+
+const challengeButton =
+    document.getElementById("challenge-btn");
+
+
+const backButton =
+    document.getElementById("back-btn");
+
+const nextButton =
+    document.getElementById("next-btn");
+
+
+const questionNumber =
+    document.getElementById("question-number");
+
+const questionText =
+    document.getElementById("question");
+
+const answersContainer =
+    document.getElementById("answers");
+
+const progressBar =
+    document.getElementById("progress-bar");
 
 
 // ===============================
 // BUTTON EVENTS
 // ===============================
 
-startButton.addEventListener("click", startQuiz);
-restartButton.addEventListener("click", restartQuiz);
-shareButton.addEventListener("click", shareResult);
-challengeButton.addEventListener("click", shareResult);
+startButton.addEventListener(
+    "click",
+    startQuiz
+);
 
-backButton.addEventListener("click", goBack);
-nextButton.addEventListener("click", goNext);
+restartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+shareButton.addEventListener(
+    "click",
+    shareResult
+);
+
+challengeButton.addEventListener(
+    "click",
+    shareResult
+);
+
+backButton.addEventListener(
+    "click",
+    goBack
+);
+
+nextButton.addEventListener(
+    "click",
+    goNext
+);
 
 
 // ===============================
@@ -553,86 +601,116 @@ function startQuiz() {
 
     currentQuestion = 0;
 
-    // Reset all answers
     selectedAnswers =
         new Array(questions.length).fill(null);
 
+
     startScreen.classList.add("hidden");
+
     resultScreen.classList.add("hidden");
+
     quizScreen.classList.remove("hidden");
 
     homeInfo.classList.add("hidden");
 
+
     showQuestion();
 }
 
-// =============================== 
-// SHOW QUESTION 
+
 // ===============================
+// SHOW QUESTION
+// ===============================
+
 function showQuestion() {
 
-    const current = questions[currentQuestion];
+    const current =
+        questions[currentQuestion];
+
 
     questionNumber.textContent =
         `Question ${currentQuestion + 1} of ${questions.length}`;
 
+
     questionText.textContent =
         current.question;
+
 
     answersContainer.innerHTML = "";
 
 
-    // Progress
     const progress =
-        ((currentQuestion + 1) / questions.length) * 100;
+        ((currentQuestion + 1) /
+            questions.length) * 100;
+
 
     progressBar.style.width =
         `${progress}%`;
 
 
-    // Create answer buttons
-    current.answers.forEach((answer, index) => {
+    current.answers.forEach(
+        (answer, index) => {
 
-        const button =
-            document.createElement("button");
-
-        button.className = "answer";
-
-        button.type = "button";
-
-        button.textContent =
-            answer[0];
+            const button =
+                document.createElement("button");
 
 
-        // IMPORTANT:
-        // Restore previously selected answer
-        if (
-            selectedAnswers[currentQuestion] === index
-        ) {
+            button.className =
+                "answer";
 
-            button.classList.add("selected");
 
-            // Force visible selected appearance
-            button.style.backgroundColor = "#444";
-            button.style.borderColor = "#ffffff";
-            button.style.color = "#ffffff";
-            button.style.fontWeight = "700";
-            button.style.boxShadow =
-                "0 0 0 2px rgba(255,255,255,0.25)";
+            button.type =
+                "button";
+
+
+            button.textContent =
+                answer[0];
+
+
+            if (
+                selectedAnswers[
+                    currentQuestion
+                ] === index
+            ) {
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                button.style.backgroundColor =
+                    "#444";
+
+                button.style.borderColor =
+                    "#ffffff";
+
+                button.style.color =
+                    "#ffffff";
+
+                button.style.fontWeight =
+                    "700";
+
+                button.style.boxShadow =
+                    "0 0 0 2px rgba(255,255,255,0.25)";
+            }
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    selectAnswer(index);
+
+                }
+            );
+
+
+            answersContainer.appendChild(
+                button
+            );
 
         }
-
-
-        button.addEventListener("click", () => {
-
-            selectAnswer(index);
-
-        });
-
-
-        answersContainer.appendChild(button);
-
-    });
+    );
 
 
     updateNavigation();
@@ -645,48 +723,72 @@ function showQuestion() {
 
 function selectAnswer(answerIndex) {
 
-    // Save selected answer
     selectedAnswers[currentQuestion] =
         answerIndex;
 
 
-    // Highlight answers
     const buttons =
-        answersContainer.querySelectorAll(".answer");
+        answersContainer.querySelectorAll(
+            ".answer"
+        );
 
 
-    buttons.forEach((button, index) => {
+    buttons.forEach(
+        (button, index) => {
 
-        if (index === answerIndex) {
+            if (index === answerIndex) {
 
-            button.classList.add("selected");
+                button.classList.add(
+                    "selected"
+                );
 
-            button.style.backgroundColor = "#444";
-            button.style.borderColor = "#ffffff";
-            button.style.color = "#ffffff";
-            button.style.fontWeight = "700";
-            button.style.boxShadow =
-                "0 0 0 2px rgba(255,255,255,0.25)";
 
-        } else {
+                button.style.backgroundColor =
+                    "#444";
 
-            button.classList.remove("selected");
+                button.style.borderColor =
+                    "#ffffff";
 
-            button.style.backgroundColor = "";
-            button.style.borderColor = "";
-            button.style.color = "";
-            button.style.fontWeight = "";
-            button.style.boxShadow = "";
+                button.style.color =
+                    "#ffffff";
+
+                button.style.fontWeight =
+                    "700";
+
+                button.style.boxShadow =
+                    "0 0 0 2px rgba(255,255,255,0.25)";
+
+            } else {
+
+                button.classList.remove(
+                    "selected"
+                );
+
+
+                button.style.backgroundColor =
+                    "";
+
+                button.style.borderColor =
+                    "";
+
+                button.style.color =
+                    "";
+
+                button.style.fontWeight =
+                    "";
+
+                button.style.boxShadow =
+                    "";
+
+            }
 
         }
-
-    });
+    );
 
 
     updateNavigation();
 
 
-    // Automatic advancement
     if (
         currentQuestion <
         questions.length - 1
@@ -696,26 +798,27 @@ function selectAnswer(answerIndex) {
             currentQuestion;
 
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            // Don't advance if user has
-            // already moved elsewhere
-            if (
-                currentQuestion ===
-                    questionAtSelection &&
+                if (
+                    currentQuestion ===
+                        questionAtSelection &&
 
-                selectedAnswers[
-                    questionAtSelection
-                ] === answerIndex
-            ) {
+                    selectedAnswers[
+                        questionAtSelection
+                    ] === answerIndex
+                ) {
 
-                currentQuestion++;
+                    currentQuestion++;
 
-                showQuestion();
+                    showQuestion();
 
-            }
+                }
 
-        }, 150);
+            },
+            150
+        );
 
     }
 }
@@ -727,7 +830,6 @@ function selectAnswer(answerIndex) {
 
 function goNext() {
 
-    // Final question = submit
     if (
         currentQuestion ===
         questions.length - 1
@@ -745,13 +847,15 @@ function goNext() {
 
         }
 
+
         return;
     }
 
 
-    // Don't allow unanswered question
     if (
-        selectedAnswers[currentQuestion] === null
+        selectedAnswers[
+            currentQuestion
+        ] === null
     ) {
 
         return;
@@ -790,13 +894,16 @@ function updateNavigation() {
     const isFirst =
         currentQuestion === 0;
 
+
     const isLast =
         currentQuestion ===
         questions.length - 1;
 
 
     const currentAnswered =
-        selectedAnswers[currentQuestion] !== null;
+        selectedAnswers[
+            currentQuestion
+        ] !== null;
 
 
     const allAnswered =
@@ -805,17 +912,9 @@ function updateNavigation() {
         );
 
 
-    // ===============================
-    // BACK
-    // ===============================
-
     backButton.disabled =
         isFirst;
 
-
-    // ===============================
-    // FINAL QUESTION
-    // ===============================
 
     if (isLast) {
 
@@ -829,7 +928,9 @@ function updateNavigation() {
 
         if (allAnswered) {
 
-            nextButton.classList.add("submit-ready");
+            nextButton.classList.add(
+                "submit-ready"
+            );
 
         } else {
 
@@ -892,26 +993,414 @@ function calculateScore() {
 
 
 // ===============================
+// QUIZ CATALOG
+// ===============================
+
+const quizCatalog = [
+
+    {
+        id: "zombie",
+        url: "/zombie-quiz/",
+        title: "Zombie Apocalypse Survival Quiz",
+        description:
+            "Make difficult decisions and discover how long you would survive in a fictional zombie outbreak.",
+        icon: "🧟",
+        relatedTo: [
+            "walking-dead",
+            "izombie",
+            "resident-evil",
+            "ultimate-zombie",
+            "apocalypse"
+        ]
+    },
+
+
+    {
+        id: "ultimate-zombie",
+        url: "/ultimate-zombie-survival-test/",
+        title: "Ultimate Zombie Apocalypse Survival Test",
+        description:
+            "Face 90 decisions involving food, water, shelter, danger and other survivors.",
+        icon: "☠️",
+        relatedTo: [
+            "zombie",
+            "walking-dead",
+            "apocalypse",
+            "nuclear",
+            "plague"
+        ]
+    },
+
+
+    {
+        id: "apocalypse",
+        url: "/apocalypse-preparedness-quiz/",
+        title: "How Prepared Are You for the Apocalypse?",
+        description:
+            "Face 30 questions and discover how prepared you really are for an apocalypse.",
+        icon: "🏚️",
+        relatedTo: [
+            "zombie",
+            "ultimate-zombie",
+            "nuclear",
+            "plague",
+            "walking-dead"
+        ]
+    },
+
+
+    {
+        id: "nuclear",
+        url: "/nuclear-apocalypse-quiz/",
+        title: "Nuclear Apocalypse Survival Quiz",
+        description:
+            "Make 50 difficult decisions and discover your survival and morality scores.",
+        icon: "☢️",
+        relatedTo: [
+            "apocalypse",
+            "plague",
+            "ultimate-zombie",
+            "zombie",
+            "walking-dead"
+        ]
+    },
+
+
+    {
+        id: "walking-dead",
+        url: "/walking-dead-quiz/",
+        title: "The Walking Dead Quiz",
+        description:
+            "Test your knowledge of characters, places, groups and major events from The Walking Dead.",
+        icon: "🧟",
+        relatedTo: [
+            "zombie",
+            "walking-dead-personality",
+            "izombie",
+            "resident-evil",
+            "ultimate-zombie"
+        ]
+    },
+
+
+    {
+        id: "the-100",
+        url: "/the-100-quiz/",
+        title: "The 100 Quiz",
+        description:
+            "Test your knowledge of the Ark, Grounders, Mount Weather, Sanctum and more.",
+        icon: "🚀",
+        relatedTo: [
+            "walking-dead",
+            "apocalypse",
+            "nuclear",
+            "love-monsters",
+            "ultimate-zombie"
+        ]
+    },
+
+
+    {
+        id: "love-monsters",
+        url: "/love-and-monsters-quiz/",
+        title: "Love and Monsters Quiz",
+        description:
+            "Test your knowledge of Joel, Aimee, monsters, colonies and memorable details.",
+        icon: "🐲",
+        relatedTo: [
+            "walking-dead",
+            "zombie",
+            "resident-evil",
+            "the-100",
+            "apocalypse"
+        ]
+    },
+
+
+    {
+        id: "walking-dead-personality",
+        url: "/the-walking-dead-personality-quiz/",
+        title: "The Walking Dead Personality Quiz",
+        description:
+            "Make 30 decisions and discover which Walking Dead character matches your personality.",
+        icon: "🧠",
+        relatedTo: [
+            "walking-dead",
+            "zombie",
+            "izombie",
+            "ultimate-zombie",
+            "apocalypse"
+        ]
+    },
+
+
+    {
+        id: "resident-evil",
+        url: "/resident-evil-quiz/",
+        title: "Resident Evil Movie Quiz",
+        description:
+            "Test your knowledge of Alice, Umbrella, the T-virus, characters and major events.",
+        icon: "🧬",
+        relatedTo: [
+            "walking-dead",
+            "zombie",
+            "izombie",
+            "love-monsters",
+            "nuclear"
+        ]
+    },
+
+
+    {
+        id: "plague",
+        url: "/plague-survival-test/",
+        title: "The Ultimate Plague Survival Test",
+        description:
+            "Face 40 difficult decisions during a deadly outbreak and see how well you would survive.",
+        icon: "☠️",
+        relatedTo: [
+            "zombie",
+            "nuclear",
+            "apocalypse",
+            "ultimate-zombie",
+            "walking-dead"
+        ]
+    },
+
+
+    {
+        id: "izombie",
+        url: "/izombie-quiz/",
+        title: "iZombie Quiz",
+        description:
+            "Test your knowledge of characters, zombies, groups and memorable events from iZombie.",
+        icon: "🧟",
+        relatedTo: [
+            "walking-dead",
+            "zombie",
+            "resident-evil",
+            "walking-dead-personality",
+            "love-monsters"
+        ]
+    }
+
+];
+
+
+// ===============================
+// FIND CURRENT QUIZ
+// ===============================
+
+function getCurrentQuiz() {
+
+    let currentPath =
+        window.location.pathname;
+
+
+    if (
+        currentPath.length > 1 &&
+        !currentPath.endsWith("/")
+    ) {
+
+        currentPath += "/";
+
+    }
+
+
+    return quizCatalog.find(
+        quiz =>
+            quiz.url === currentPath
+    );
+
+}
+
+
+// ===============================
+// SHOW SUGGESTED QUIZZES
+// ===============================
+
+function showSuggestedQuizzes() {
+
+    const grid =
+        document.getElementById(
+            "suggested-quiz-grid"
+        );
+
+
+    if (!grid) {
+
+        return;
+
+    }
+
+
+    const currentQuiz =
+        getCurrentQuiz();
+
+
+    if (!currentQuiz) {
+
+        return;
+
+    }
+
+
+    const recommendations =
+        quizCatalog
+
+            .filter(
+                quiz =>
+                    quiz.id !==
+                    currentQuiz.id
+            )
+
+            .map(
+                quiz => {
+
+                    const relatedPosition =
+                        currentQuiz.relatedTo.indexOf(
+                            quiz.id
+                        );
+
+
+                    return {
+
+                        quiz: quiz,
+
+                        score:
+                            relatedPosition === -1
+                                ? 0
+                                : 100 -
+                                  relatedPosition
+
+                    };
+
+                }
+            )
+
+
+            .sort(
+                (a, b) =>
+                    b.score - a.score
+            );
+
+
+    const selected =
+        recommendations
+            .slice(0, 3)
+            .map(
+                item =>
+                    item.quiz
+            );
+
+
+    grid.innerHTML = "";
+
+
+    selected.forEach(
+        quiz => {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "suggested-quiz-card";
+
+
+            const icon =
+                document.createElement(
+                    "div"
+                );
+
+            icon.className =
+                "suggested-quiz-icon";
+
+            icon.textContent =
+                quiz.icon;
+
+
+            const title =
+                document.createElement(
+                    "h3"
+                );
+
+            title.textContent =
+                quiz.title;
+
+
+            const description =
+                document.createElement(
+                    "p"
+                );
+
+            description.textContent =
+                quiz.description;
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+            link.className =
+                "suggested-quiz-button";
+
+            link.href =
+                quiz.url;
+
+            link.textContent =
+                "TAKE QUIZ";
+
+
+            card.appendChild(icon);
+
+            card.appendChild(title);
+
+            card.appendChild(description);
+
+            card.appendChild(link);
+
+
+            grid.appendChild(card);
+
+        }
+    );
+
+}
+
+
+// ===============================
 // SHOW RESULT
 // ===============================
 
 function showResult() {
 
-    // Calculate score ONLY here
     const score =
         calculateScore();
 
 
-    homeInfo.classList.remove("hidden");
+    homeInfo.classList.remove(
+        "hidden"
+    );
 
-    quizScreen.classList.add("hidden");
 
-    resultScreen.classList.remove("hidden");
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
 
 
     document.getElementById(
         "final-score"
-    ).textContent = score;
+    ).textContent =
+        score;
 
 
     let title;
@@ -1008,26 +1497,32 @@ function showResult() {
 
         icon =
             "🧠";
+
     }
 
 
     document.getElementById(
         "result-title"
-    ).textContent = title;
+    ).textContent =
+        title;
 
 
     document.getElementById(
         "result-description"
-    ).textContent = description;
+    ).textContent =
+        description;
 
 
     document.getElementById(
         "knowledge-level"
-    ).textContent = knowledge;
+    ).textContent =
+        knowledge;
 
 
     const resultIcon =
-        document.getElementById("result-icon");
+        document.getElementById(
+            "result-icon"
+        );
 
 
     if (resultIcon) {
@@ -1042,10 +1537,18 @@ function showResult() {
         "100%";
 
 
+    // Show related quizzes
+    showSuggestedQuizzes();
+
+
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
+
 }
 
 
@@ -1057,17 +1560,29 @@ function restartQuiz() {
 
     currentQuestion = 0;
 
+
     selectedAnswers =
         new Array(questions.length).fill(null);
 
 
-    resultScreen.classList.add("hidden");
+    resultScreen.classList.add(
+        "hidden"
+    );
 
-    quizScreen.classList.add("hidden");
 
-    startScreen.classList.remove("hidden");
+    quizScreen.classList.add(
+        "hidden"
+    );
 
-    homeInfo.classList.remove("hidden");
+
+    startScreen.classList.remove(
+        "hidden"
+    );
+
+
+    homeInfo.classList.remove(
+        "hidden"
+    );
 
 
     progressBar.style.width =
@@ -1075,9 +1590,13 @@ function restartQuiz() {
 
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
+
 }
 
 
@@ -1155,4 +1674,5 @@ async function shareResult() {
         );
 
     }
+
 }
