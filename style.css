@@ -860,3 +860,223 @@ h2 {
     }
 
 }
+
+/* =========================================
+   SUGGESTED QUIZZES
+========================================= */
+
+.suggested-quizzes {
+
+    width: 100%;
+
+    margin-top: 45px;
+
+    padding-top: 30px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.12);
+
+}
+
+
+.suggested-quizzes h2 {
+
+    margin:
+        0 0 8px;
+
+    text-align: center;
+
+    font-size: 27px;
+
+    line-height: 1.3;
+
+}
+
+
+.suggested-subtitle {
+
+    margin:
+        0 0 25px;
+
+    text-align: center;
+
+    color: #888;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+#suggested-quiz-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 14px;
+
+}
+
+
+.suggested-quiz-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    padding:
+        20px 17px;
+
+    background: #171717;
+
+    border:
+        1px solid #303030;
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.suggested-quiz-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    background: #202020;
+
+    border-color: #555;
+
+}
+
+
+.suggested-quiz-icon {
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.suggested-quiz-card h3 {
+
+    margin:
+        0 0 9px;
+
+    color: #eee;
+
+    font-size: 17px;
+
+    line-height: 1.3;
+
+}
+
+
+.suggested-quiz-card p {
+
+    flex-grow: 1;
+
+    margin:
+        0 0 17px;
+
+    color: #999;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+
+}
+
+
+.suggested-quiz-button {
+
+    display: block;
+
+    width: 100%;
+
+    padding:
+        10px 8px;
+
+    border:
+        1px solid #444;
+
+    border-radius: 7px;
+
+    background: #222;
+
+    color: #ddd;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+
+}
+
+
+.suggested-quiz-button:hover {
+
+    background: #303030;
+
+    border-color: #666;
+
+    color: #fff;
+
+}
+
+
+/* =========================================
+   SUGGESTED QUIZZES - MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    #suggested-quiz-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+    }
+
+
+    .suggested-quiz-card {
+
+        padding: 18px;
+
+    }
+
+
+    .suggested-quiz-icon {
+
+        font-size: 28px;
+
+    }
+
+
+    .suggested-quiz-card h3 {
+
+        font-size: 16px;
+
+    }
+
+}
