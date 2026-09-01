@@ -7,40 +7,64 @@
     <title>The Walking Dead Quiz – How Well Do You Know the Show?</title>
 
     <meta name="description" content="Think you know The Walking Dead? Test your knowledge of characters, places, groups, events and more with this 50-question Walking Dead quiz.">
+
     <meta name="keywords" content="The Walking Dead quiz, Walking Dead trivia, TWD quiz, Walking Dead trivia quiz, the walking dead knowledge, the walking dead knowledge quiz, the walking dead knowledge trivia, TWD trivia, how well you know the walking dead, AMC the walking dead, AMC TWD, AMC walking dead">
+
     <meta name="author" content="Apocalypse Quizzes">
     <meta name="robots" content="index, follow">
 
     <link rel="canonical" href="https://apocalypsequizzes.com/walking-dead-knowledge/">
 
     <meta property="og:title" content="The Walking Dead Quiz – How Well Do You Know the Show?">
+
     <meta property="og:description" content="Test your knowledge of The Walking Dead with 50 questions covering characters, places, groups and events.">
+
     <meta property="og:url" content="https://apocalypsequizzes.com/walking-dead-knowledge/">
+
     <meta property="og:type" content="website">
+
     <meta property="og:site_name" content="Apocalypse Quizzes">
 
     <meta name="twitter:card" content="summary">
+
     <meta name="twitter:title" content="The Walking Dead Quiz">
+
     <meta name="twitter:description" content="How well do you know The Walking Dead? Take the 50-question trivia challenge.">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧟</text></svg>">
 
+
+    <!-- GOOGLE ANALYTICS -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YC3ERJSBST"></script>
+
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag(){
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
+
         gtag('config', 'G-YC3ERJSBST');
     </script>
 
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
 <main class="container">
 
-    <!-- START SCREEN -->
+
+    <!-- =====================================================
+         START SCREEN
+         ===================================================== -->
+
     <section id="start-screen">
 
         <div class="intro-card">
@@ -51,7 +75,9 @@
                 class="quiz-start-image"
             >
 
-            <h1>HOW WELL DO YOU KNOW THE WALKING DEAD?</h1>
+            <h1>
+                HOW WELL DO YOU KNOW THE WALKING DEAD?
+            </h1>
 
             <p class="subtitle">
                 Think you know the survivors, communities, villains and
@@ -60,189 +86,376 @@
             </p>
 
             <div class="info">
-                <span>50 Questions</span>
-                <span>•</span>
-                <span>4 Possible Choices</span>
+
+                <span>
+                    50 Questions
+                </span>
+
+                <span>
+                    •
+                </span>
+
+                <span>
+                    4 Possible Choices
+                </span>
+
             </div>
 
-            <button id="start-btn">START QUIZ</button>
+            <button id="start-btn">
+                START QUIZ
+            </button>
 
         </div>
 
     </section>
 
 
-    <!-- QUIZ SCREEN -->
+
+    <!-- =====================================================
+         QUIZ SCREEN
+         ===================================================== -->
+
     <section id="quiz-screen" class="screen hidden">
 
         <div class="quiz-header">
-            <span id="question-number">Question 1 of 50</span>
-            <span id="score-display">Walking Dead Trivia</span>
+
+            <span id="question-number">
+                Question 1 of 50
+            </span>
+
+            <span id="score-display">
+                Walking Dead Trivia
+            </span>
+
         </div>
+
 
         <div class="progress">
-            <div id="progress-bar"></div>
+
+            <div id="progress-bar">
+            </div>
+
         </div>
 
-        <h2 id="question"></h2>
 
-        <div id="answers"></div>
+        <h2 id="question">
+        </h2>
+
+
+        <div id="answers">
+        </div>
+
+
         <div class="quiz-navigation">
 
-        <button id="back-btn" class="nav-btn" disabled>
-            ← Back
-        </button>
+            <button
+                id="back-btn"
+                class="nav-btn"
+                disabled
+            >
+                ← Back
+            </button>
 
-        <button id="next-btn" class="nav-btn">
-            Next →
-        </button>
 
-        <button id="submit-btn" class="nav-btn submit-btn hidden" disabled>
-            Answer All Questions
-        </button>
+            <button
+                id="next-btn"
+                class="nav-btn"
+            >
+                Next →
+            </button>
 
-    </div>
 
+            <button
+                id="submit-btn"
+                class="nav-btn submit-btn hidden"
+                disabled
+            >
+                Answer All Questions
+            </button>
+
+        </div>
 
     </section>
 
 
-    <!-- RESULT SCREEN -->
-<section id="result-screen" class="screen hidden">
 
-    <div id="result-icon" class="icon">🧟</div>
+    <!-- =====================================================
+         RESULT SCREEN
+         ===================================================== -->
 
-    <p class="result-label">YOUR RESULT</p>
+    <section id="result-screen" class="screen hidden">
 
-    <h1 id="result-title"></h1>
-
-    <div class="result-score">
-        <span id="final-score"></span>/100
-    </div>
-
-    <p id="result-description"></p>
-
-    <div class="survival-box">
-        <strong>Walking Dead Knowledge</strong>
-        <span id="knowledge-level"></span>
-    </div>
-
-    <button id="restart-btn">TRY AGAIN</button>
-    <button id="share-btn">📤 SHARE MY RESULT</button>
-    <button id="challenge-btn">🧟 CHALLENGE YOUR FRIENDS</button>
+        <div id="result-icon"
+            class="icon">
+            🧟
+        </div>
 
 
-    <!-- SUGGESTED QUIZZES -->
-<section class="suggested-quizzes">
+        <p class="result-label">
+            YOUR RESULT
+        </p>
 
-    <h2>Suggested Quizzes</h2>
 
-    <p class="suggested-subtitle">
-        Think you can handle more? Try another quiz.
-    </p>
+        <h1 id="result-title">
+        </h1>
 
-    <div class="suggested-grid">
 
-        <a href="/walking-dead-characters-quiz/" class="suggested-card">
-            <span class="suggested-icon">🧟</span>
-            <span class="suggested-title">
-                The Walking Dead Personality Quiz
+        <div class="result-score">
+
+            <span id="final-score">
+            </span>/100
+
+        </div>
+
+
+        <p id="result-description">
+        </p>
+
+
+        <div class="survival-box">
+
+            <strong>
+                Walking Dead Knowledge
+            </strong>
+
+            <span id="knowledge-level">
             </span>
-            <span class="suggested-description">
-                Which Walking Dead character matches your personality?
-            </span>
-        </a>
 
-        <a href="/zombie-quiz/" class="suggested-card">
-            <span class="suggested-icon">☠️</span>
-            <span class="suggested-title">
-                Zombie Apocalypse Survival Quiz
-            </span>
-            <span class="suggested-description">
-                How long would you survive a zombie outbreak?
-            </span>
-        </a>
+        </div>
 
-        <a href="/the-100-knowledge/" class="suggested-card">
-            <span class="suggested-icon">🚀</span>
-            <span class="suggested-title">
-                The 100 Quiz
-            </span>
-            <span class="suggested-description">
-                Test your knowledge of The 100 with 50 questions.
-            </span>
-        </a>
 
-    </div>
+        <button id="restart-btn">
+            TRY AGAIN
+        </button>
 
-</section>
 
-    <!-- HOMEPAGE INFORMATION -->
+        <button id="share-btn">
+            📤 SHARE MY RESULT
+        </button>
+
+
+        <button id="challenge-btn">
+            🧟 CHALLENGE YOUR FRIENDS
+        </button>
+
+
+
+        <!-- =================================================
+             SUGGESTED QUIZZES
+             ================================================= -->
+
+        <section class="suggested-quizzes">
+
+            <h2>
+                Suggested Quizzes
+            </h2>
+
+            <p class="suggested-subtitle">
+                Think you can handle more? Try another quiz.
+            </p>
+
+
+            <div class="suggested-grid">
+
+
+                <a
+                    href="/walking-dead-characters-quiz/"
+                    class="suggested-card"
+                >
+
+                    <span class="suggested-icon">
+                        🧟
+                    </span>
+
+                    <span class="suggested-title">
+                        The Walking Dead Personality Quiz
+                    </span>
+
+                    <span class="suggested-description">
+                        Which Walking Dead character matches your personality?
+                    </span>
+
+                </a>
+
+
+
+                <a
+                    href="/zombie-quiz/"
+                    class="suggested-card"
+                >
+
+                    <span class="suggested-icon">
+                        ☠️
+                    </span>
+
+                    <span class="suggested-title">
+                        Zombie Apocalypse Survival Quiz
+                    </span>
+
+                    <span class="suggested-description">
+                        How long would you survive a zombie outbreak?
+                    </span>
+
+                </a>
+
+
+
+                <a
+                    href="/the-100-knowledge/"
+                    class="suggested-card"
+                >
+
+                    <span class="suggested-icon">
+                        🚀
+                    </span>
+
+                    <span class="suggested-title">
+                        The 100 Quiz
+                    </span>
+
+                    <span class="suggested-description">
+                        Test your knowledge of The 100 with 50 questions.
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         HOMEPAGE INFORMATION
+         
+         IMPORTANT:
+         This is outside the start, quiz and result screens.
+         It therefore remains visible on both the start page
+         and the result page.
+         ===================================================== -->
+
     <div id="home-info">
+
+
+        <!-- ABOUT -->
 
         <section class="home-info">
 
-            <h2>About The Walking Dead Quiz</h2>
+            <h2>
+                About The Walking Dead Quiz
+            </h2>
+
 
             <p>
-                Think you know everything about The Walking Dead?
-                Put your knowledge to the test with this 50-question
-                trivia quiz.
+                Think you know everything about
+                <em>The Walking Dead</em>?
+                Put your knowledge to the test with this
+                50-question trivia quiz.
             </p>
 
-            <p>
-                The questions cover characters, locations, communities,
-                groups, occupations, real names and memorable events from
-                the television series.
-            </p>
 
             <p>
-                Each correct answer gives you 2 points, giving you a
-                maximum possible score of 100.
+                The questions cover characters, locations,
+                communities, groups, occupations, real names
+                and memorable events from the television series.
+            </p>
+
+
+            <p>
+                Each question has four possible answers.
+                A correct answer gives you 2 points, while
+                an incorrect answer gives you 0 points.
+                The maximum possible score is 100.
             </p>
 
         </section>
 
 
+
+        <!-- FAQ -->
+
         <section class="home-info">
 
-            <h2>Frequently Asked Questions</h2>
+            <h2>
+                Frequently Asked Questions
+            </h2>
 
-            <h3>How does the Walking Dead quiz work?</h3>
+
+            <h3>
+                How does the Walking Dead quiz work?
+            </h3>
 
             <p>
-                You will face 50 questions about The Walking Dead.
-                Each question has four possible answers, but only one
-                answer is correct.
+                You will face 50 questions about
+                <em>The Walking Dead</em>.
+                Each question has four possible answers,
+                but only one answer is correct.
             </p>
 
-            <h3>What is the maximum score?</h3>
+
+            <h3>
+                What is the maximum score?
+            </h3>
 
             <p>
-                The maximum score is 100 points. Every correct answer
-                is worth 2 points.
+                The maximum score is 100 points.
+                Every correct answer is worth 2 points.
             </p>
 
-            <h3>What does my score mean?</h3>
+
+            <h3>
+                What does my score mean?
+            </h3>
 
             <p>
-                Your score represents how well you remember the show,
-                including its characters, locations, groups and major
-                events.
+                Your score represents how well you remember
+                the show, including its characters, locations,
+                groups and major events.
             </p>
 
-            <h3>Can I take the quiz again?</h3>
+
+            <h3>
+                What topics are covered?
+            </h3>
 
             <p>
-                Yes. Select TRY AGAIN after finishing the quiz to
-                replay it.
+                The quiz covers characters, locations,
+                communities, groups, occupations, real names
+                and memorable events from across
+                <em>The Walking Dead</em>.
             </p>
 
-            <h3>Can I challenge my friends?</h3>
+
+            <h3>
+                Does the quiz cover the whole series?
+            </h3>
 
             <p>
-                Yes. Use the Challenge Your Friends button after
-                completing the quiz and see if they can beat your score.
+                The questions cover a broad range of characters,
+                events and locations from the television series.
+            </p>
+
+
+            <h3>
+                Can I take the quiz again?
+            </h3>
+
+            <p>
+                Yes. Select TRY AGAIN after finishing the quiz
+                to replay it and try for a higher score.
+            </p>
+
+
+            <h3>
+                Can I challenge my friends?
+            </h3>
+
+            <p>
+                Yes. Use the Challenge Your Friends button
+                after completing the quiz and see if they can
+                beat your score.
             </p>
 
         </section>
@@ -252,27 +465,44 @@
 </main>
 
 
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
 <footer class="site-footer">
 
     <div class="footer-links">
 
-        <a href="/">Home</a>
+        <a href="/">
+            Home
+        </a>
 
-                <a href="/about.html">About</a>
+        <a href="/about.html">
+            About
+        </a>
 
-                <a href="/privacy.html">Privacy Policy</a>
+        <a href="/privacy.html">
+            Privacy Policy
+        </a>
 
-                <a href="/disclaimer.html">Disclaimer</a>
+        <a href="/disclaimer.html">
+            Disclaimer
+        </a>
 
-                <a href="/contact.html">Contact</a>
+        <a href="/contact.html">
+            Contact
+        </a>
 
     </div>
+
 
     <div class="copyright">
         © 2026 Apocalypse Quizzes
     </div>
 
 </footer>
+
 
 
 <script src="script.js"></script>
