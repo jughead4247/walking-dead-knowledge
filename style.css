@@ -619,15 +619,15 @@ h2 {
 /* FOOTER */
 
 .site-footer {
-    width: 100%;
+    margin-top: 0;
 
-    max-width: 760px;
+    padding: 50px 20px 35px;
 
-    margin-top: 20px;
+    background: #080808;
 
-    padding: 10px;
+    color: #ffffff;
 
-    font-size: 12px;
+    border-top: 1px solid #292929;
 }
 
 
