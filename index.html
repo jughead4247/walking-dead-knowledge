@@ -1,65 +1,65 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>The Walking Dead Quiz – How Well Do You Know the Show?</title>
+<title>The Walking Dead Quiz – How Well Do You Know the Show?</title>
 
-    <meta name="description" content="Think you know The Walking Dead? Test your knowledge of characters, places, groups, events and more with this 50-question Walking Dead quiz.">
+<meta name="description" content="Think you know The Walking Dead? Test your knowledge of characters, places, groups, events and more with this 50-question Walking Dead quiz.">
 
-    <meta name="keywords" content="The Walking Dead quiz, Walking Dead trivia, TWD quiz, Walking Dead trivia quiz, the walking dead knowledge, the walking dead knowledge quiz, the walking dead knowledge trivia, TWD trivia, how well you know the walking dead, AMC the walking dead, AMC TWD, AMC walking dead">
+<meta name="keywords" content="The Walking Dead quiz, Walking Dead trivia, TWD quiz, Walking Dead trivia quiz, the walking dead knowledge, the walking dead knowledge quiz, the walking dead knowledge trivia, TWD trivia, how well you know the walking dead, AMC the walking dead, AMC TWD, AMC walking dead">
 
-    <meta name="author" content="Apocalypse Quizzes">
-    <meta name="robots" content="index, follow">
+<meta name="author" content="Apocalypse Quizzes">
+<meta name="robots" content="index, follow">
 
-    <link rel="canonical" href="https://apocalypsequizzes.com/walking-dead-knowledge/">
+<link rel="canonical" href="https://apocalypsequizzes.com/walking-dead-knowledge/">
 
-    <meta property="og:title" content="The Walking Dead Quiz – How Well Do You Know the Show?">
+<meta property="og:title" content="The Walking Dead Quiz – How Well Do You Know the Show?">
 
-    <meta property="og:description" content="Test your knowledge of The Walking Dead with 50 questions covering characters, places, groups and events.">
+<meta property="og:description" content="Test your knowledge of The Walking Dead with 50 questions covering characters, places, groups and events.">
 
-    <meta property="og:url" content="https://apocalypsequizzes.com/walking-dead-knowledge/">
+<meta property="og:url" content="https://apocalypsequizzes.com/walking-dead-knowledge/">
 
-    <meta property="og:type" content="website">
+<meta property="og:type" content="website">
 
-    <meta property="og:site_name" content="Apocalypse Quizzes">
+<meta property="og:site_name" content="Apocalypse Quizzes">
 
-    <meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary">
 
-    <meta name="twitter:title" content="The Walking Dead Quiz">
+<meta name="twitter:title" content="The Walking Dead Quiz">
 
-    <meta name="twitter:description" content="How well do you know The Walking Dead? Take the 50-question trivia challenge.">
+<meta name="twitter:description" content="How well do you know The Walking Dead? Take the 50-question trivia challenge.">
 
-    <link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png">
 
 
-    <!-- GOOGLE ANALYTICS -->
+<!-- GOOGLE ANALYTICS -->
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YC3ERJSBST"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YC3ERJSBST"></script>
 
-    <script>
-        window.dataLayer = window.dataLayer || [];
+<script>
+    window.dataLayer = window.dataLayer || [];
 
-        function gtag(){
-            dataLayer.push(arguments);
-        }
+    function gtag(){
+        dataLayer.push(arguments);
+    }
 
-        gtag('js', new Date());
+    gtag('js', new Date());
 
-        gtag('config', 'G-YC3ERJSBST');
-    </script>
+    gtag('config', 'G-YC3ERJSBST');
+</script>
 
-    <!-- GOOGLE ADSENSE -->
+<!-- GOOGLE ADSENSE -->
 
-    <script async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2285244517360573"
-        crossorigin="anonymous"></script>
+<script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2285244517360573"
+    crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
-
 
 <body>
 <header class="site-header">
@@ -110,418 +110,482 @@
 </nav>
 <main class="container">
 
+<!-- =====================================================
+     START SCREEN
+     ===================================================== -->
 
-    <!-- =====================================================
-         START SCREEN
-         ===================================================== -->
+<section id="start-screen">
 
-    <section id="start-screen">
+    <div class="intro-card">
 
-        <div class="intro-card">
+        <img
+            src="walking-dead-knowledge.png"
+            alt="The Walking Dead Quiz"
+            class="quiz-start-image"
+        >
 
-            <img
-                src="walking-dead-knowledge.png"
-                alt="The Walking Dead Quiz"
-                class="quiz-start-image"
-            >
-
-            <p class="subtitle">
-                Think you know the survivors, communities, villains and
-                events? Test your knowledge and see how much of the show THE WALKING DEAD
-                you really remember.
-            </p>
-
-            <div class="info">
-
-                <span>
-                    50 Questions
-                </span>
-
-                <span>
-                    •
-                </span>
-
-                <span>
-                    4 Possible Choices
-                </span>
-
-            </div>
-
-            <button id="start-btn">
-                START QUIZ
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         QUIZ SCREEN
-         ===================================================== -->
-
-    <section id="quiz-screen" class="screen hidden">
-
-        <div class="quiz-header">
-
-            <span id="question-number">
-                Question 1 of 50
-            </span>
-
-            <span id="score-display">
-                Walking Dead Trivia
-            </span>
-
-        </div>
-
-
-        <div class="progress">
-
-            <div id="progress-bar">
-            </div>
-
-        </div>
-
-
-        <h2 id="question">
-        </h2>
-
-
-        <div id="answers">
-        </div>
-
-
-        <div class="quiz-navigation">
-
-            <button
-                id="back-btn"
-                class="nav-btn"
-                disabled
-            >
-                ← Back
-            </button>
-
-
-            <button
-                id="next-btn"
-                class="nav-btn"
-            >
-                Next →
-            </button>
-
-
-            <button
-                id="submit-btn"
-                class="nav-btn submit-btn hidden"
-                disabled
-            >
-                Answer All Questions
-            </button>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         RESULT SCREEN
-         ===================================================== -->
-
-    <section id="result-screen" class="screen hidden">
-
-        <div id="result-icon"
-            class="icon">
-            🧟
-        </div>
-
-
-        <p class="result-label">
-            YOUR RESULT
+        <p class="subtitle">
+            Think you know the survivors, communities, villains and
+            events? Test your knowledge and see how much of the show THE WALKING DEAD
+            you really remember.
         </p>
 
+        <div class="info">
 
-        <h1 id="result-title">
-        </h1>
+            <span>
+                50 Questions
+            </span>
 
+            <span>
+                •
+            </span>
 
-        <div class="result-score">
-
-            <span id="final-score">
-            </span>/100
-
-        </div>
-
-
-        <p id="result-description">
-        </p>
-
-
-        <div class="survival-box">
-
-            <strong>
-                Walking Dead Knowledge
-            </strong>
-
-            <span id="knowledge-level">
+            <span>
+                4 Possible Choices
             </span>
 
         </div>
 
-
-        <button id="restart-btn">
-            TRY AGAIN
+        <button id="start-btn">
+            START QUIZ
         </button>
 
+    </div>
 
-        <button id="share-btn">
-            📤 SHARE MY RESULT
-        </button>
-
-
-        <button id="challenge-btn">
-            🧟 CHALLENGE YOUR FRIENDS
-        </button>
+</section>
 
 
-        <!-- =================================================
-     SUGGESTED QUIZZES
-     ================================================= -->
+<!-- =====================================================
+     QUIZ SCREEN
+     ===================================================== -->
 
-<section class="suggested-quizzes">
+<section id="quiz-screen" class="screen hidden">
 
-    <h2>
-        Suggested Quizzes
+    <div class="quiz-header">
+
+        <span id="question-number">
+            Question 1 of 50
+        </span>
+
+        <span id="score-display">
+            Walking Dead Trivia
+        </span>
+
+    </div>
+
+
+    <div class="progress">
+
+        <div id="progress-bar">
+        </div>
+
+    </div>
+
+
+    <h2 id="question">
     </h2>
 
-    <p class="suggested-subtitle">
-        Think you can handle more? Try another quiz.
+
+    <div id="answers">
+    </div>
+
+
+    <div class="quiz-navigation">
+
+        <button
+            id="back-btn"
+            class="nav-btn"
+            disabled
+        >
+            ← Back
+        </button>
+
+
+        <button
+            id="next-btn"
+            class="nav-btn"
+        >
+            Next →
+        </button>
+
+
+        <button
+            id="submit-btn"
+            class="nav-btn submit-btn hidden"
+            disabled
+        >
+            Answer All Questions
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RESULT SCREEN
+     ===================================================== -->
+
+<section id="result-screen" class="screen hidden">
+
+    <div id="result-icon"
+        class="icon">
+        🧟
+    </div>
+
+
+    <p class="result-label">
+        YOUR RESULT
     </p>
 
 
-    <div class="suggested-grid">
+    <h1 id="result-title">
+    </h1>
 
 
-        <!-- WALKING DEAD CHARACTERS -->
+    <div class="result-score">
 
-        <a
-            href="/walking-dead-characters-quiz/"
-            class="suggested-card"
-        >
+        <span id="final-score">
+        </span>/100
 
-            <img
-                src="twd-personality.png"
-                alt="The Walking Dead Characters Quiz"
-                class="suggested-image"
-            >
-
-            <span class="suggested-title">
-                The Walking Dead Characters Quiz
-            </span>
-
-            <span class="suggested-description">
-                Find out which The Walking Dead character are you?
-            </span>
-
-        </a>
-
-
-        <!-- ZOMBIE APOCALYPSE -->
-
-        <a
-            href="/zombie-quiz/"
-            class="suggested-card"
-        >
-
-            <img
-                src="zombie-apocalypse.png"
-                alt="Zombie Apocalypse Survival Quiz"
-                class="suggested-image"
-            >
-
-            <span class="suggested-title">
-                Zombie Apocalypse Survival Quiz
-            </span>
-
-            <span class="suggested-description">
-                How long would you survive a zombie outbreak?
-            </span>
-
-        </a>
-
-
-        <!-- THE 100 -->
-
-        <a
-            href="/the-100-knowledge/"
-            class="suggested-card"
-        >
-
-            <img
-                src="the-100-knowledge.png"
-                alt="The 100 Knowledge Quiz"
-                class="suggested-image"
-            >
-
-            <span class="suggested-title">
-                The 100 Knowledge Quiz
-            </span>
-
-            <span class="suggested-description">
-                Test your knowledge of the Ark, Grounders, Sanctum and more.
-            </span>
-        </a>
     </div>
+
+
+    <p id="result-description">
+    </p>
+
+
+    <div class="survival-box">
+
+        <strong>
+            Walking Dead Knowledge
+        </strong>
+
+        <span id="knowledge-level">
+        </span>
+
+    </div>
+
+
+    <button id="restart-btn">
+        TRY AGAIN
+    </button>
+
+
+    <button id="share-btn">
+        📤 SHARE MY RESULT
+    </button>
+
+
+    <button id="challenge-btn">
+        🧟 CHALLENGE YOUR FRIENDS
+    </button>
+
+
+    <!-- =================================================
+ SUGGESTED QUIZZES
+ ================================================= -->
+
+<section class="suggested-quizzes">
+
+<h2>
+    Suggested Quizzes
+</h2>
+
+<p class="suggested-subtitle">
+    Think you can handle more? Try another quiz.
+</p>
+
+
+<div class="suggested-grid">
+
+
+    <!-- WALKING DEAD CHARACTERS -->
+
+    <a
+        href="/walking-dead-characters-quiz/"
+        class="suggested-card"
+    >
+
+        <img
+            src="twd-personality.png"
+            alt="The Walking Dead Characters Quiz"
+            class="suggested-image"
+        >
+
+        <span class="suggested-title">
+            The Walking Dead Characters Quiz
+        </span>
+
+        <span class="suggested-description">
+            Find out which The Walking Dead character are you?
+        </span>
+
+    </a>
+
+
+    <!-- ZOMBIE APOCALYPSE -->
+
+    <a
+        href="/zombie-quiz/"
+        class="suggested-card"
+    >
+
+        <img
+            src="zombie-apocalypse.png"
+            alt="Zombie Apocalypse Survival Quiz"
+            class="suggested-image"
+        >
+
+        <span class="suggested-title">
+            Zombie Apocalypse Survival Quiz
+        </span>
+
+        <span class="suggested-description">
+            How long would you survive a zombie outbreak?
+        </span>
+
+    </a>
+
+
+    <!-- THE 100 -->
+
+    <a
+        href="/the-100-knowledge/"
+        class="suggested-card"
+    >
+
+        <img
+            src="the-100-knowledge.png"
+            alt="The 100 Knowledge Quiz"
+            class="suggested-image"
+        >
+
+        <span class="suggested-title">
+            The 100 Knowledge Quiz
+        </span>
+
+        <span class="suggested-description">
+            Test your knowledge of the Ark, Grounders, Sanctum and more.
+        </span>
+    </a>
+</div>
+
 </section>
-        
-    <!-- MORE QUIZZES CTA -->                                                                                                          
-            <div class="more-quizzes-card"> 
-    <h3> 
-        Explore More Quizzes 
-    </h3> 
- 
-    <p> 
-        Discover more apocalypse, zombie, survival and dystopian quizzes. 
-    </p> 
- 
-    <a href="/" class="more-quizzes-btn">
-    🧟 APOCALYPSE QUIZZES
+
+<!-- MORE QUIZZES CTA -->                                                                                                          
+        <div class="more-quizzes-card"> 
+<h3> 
+    Explore More Quizzes 
+</h3> 
+
+<p> 
+    Discover more apocalypse, zombie, survival and dystopian quizzes. 
+</p> 
+
+<a href="/" class="more-quizzes-btn">
+🧟 APOCALYPSE QUIZZES
+
 </a>
 </div> 
 </section>
-        
-    <!-- =====================================================
-         HOMEPAGE INFORMATION
-         ===================================================== -->
 
-    <div id="home-info">
+<!-- =====================================================
+     HOMEPAGE INFORMATION
+     ===================================================== -->
 
-        <!-- ABOUT -->
+<div id="home-info">
 
-        <section class="home-info">
+    <!-- ABOUT -->
 
-            <h2>
-                About The Walking Dead Quiz
-            </h2>
+    <section class="home-info">
 
-
-            <p>
-                Think you know everything about
-                <em>The Walking Dead</em>?
-                Put your knowledge to the test with this
-                50-question trivia quiz.
-            </p>
+        <h2>
+            About The Walking Dead Quiz
+        </h2>
 
 
-            <p>
-                The questions cover characters, locations,
-                communities, groups, occupations, real names
-                and memorable events from the television series.
-            </p>
+        <p>
+            <em>The Walking Dead</em> is one of television's best-known
+            post-apocalyptic dramas, following survivors trying to rebuild
+            their lives after a mysterious outbreak turns the dead into
+            aggressive reanimated walkers. The television series premiered
+            in 2010 and ran for eleven seasons, concluding in 2022.
+        </p>
 
 
-            <p>
-                Each question has four possible answers.
-                A correct answer gives you 2 points, while
-                an incorrect answer gives you 0 points.
-                The maximum possible score is 100.
-            </p>
-
-        </section>
-
+        <p>
+            Based on the comic book series created by Robert Kirkman,
+            Tony Moore and Charlie Adlard, the television adaptation
+            developed its own characters, storylines and major plot
+            changes. This means that remembering the comics alone is not
+            enough to answer many questions about the television series.
+        </p>
 
 
-        <!-- FAQ -->
-
-        <section class="home-info">
-
-            <h2>
-                Frequently Asked Questions
-            </h2>
-
-
-            <h3>
-                How does the Walking Dead quiz work?
-            </h3>
-
-            <p>
-                You will face 50 questions about
-                <em>The Walking Dead</em>.
-                Each question has four possible answers,
-                but only one answer is correct.
-            </p>
+        <p>
+            This 50-question quiz focuses specifically on details from
+            <em>The Walking Dead</em> television universe. Questions cover
+            characters, communities, locations, groups, occupations,
+            identities, relationships and memorable events. Some questions
+            test famous moments, while others focus on smaller details
+            that dedicated viewers may remember.
+        </p>
 
 
-            <h3>
-                What is the maximum score?
-            </h3>
-
-            <p>
-                The maximum score is 100 points.
-                Every correct answer is worth 2 points.
-            </p>
-
-
-            <h3>
-                What does my score mean?
-            </h3>
-
-            <p>
-                Your score represents how well you remember
-                the show, including its characters, locations,
-                groups and major events.
-            </p>
+        <p>
+            The quiz includes characters such as Rick Grimes, Daryl Dixon,
+            Carol Peletier, Michonne, Glenn Rhee, Maggie Greene, Negan,
+            Ezekiel and many others. It also covers groups and communities
+            including Alexandria, Hilltop, the Kingdom, the Saviors,
+            the Whisperers and the Commonwealth.
+        </p>
 
 
-            <h3>
-                What topics are covered?
-            </h3>
+        <p>
+            Every question has four possible answers. A correct answer is
+            worth 2 points and an incorrect answer is worth 0 points,
+            giving the quiz a maximum score of 100. Your final result
+            places your performance into a Walking Dead knowledge level,
+            from a casual viewer to a Walking Dead Encyclopedia.
+        </p>
 
-            <p>
-                The quiz covers characters, locations,
-                communities, groups, occupations, real names
-                and memorable events from across
-                <em>The Walking Dead</em>.
-            </p>
-
-
-            <h3>
-                Does the quiz cover the whole series?
-            </h3>
-
-            <p>
-                The questions cover a broad range of characters,
-                events and locations from the television series.
-            </p>
+    </section>
 
 
-            <h3>
-                Can I take the quiz again?
-            </h3>
 
-            <p>
-                Yes. Select TRY AGAIN after finishing the quiz
-                to replay it and try for a higher score.
-            </p>
+    <!-- FAQ -->
+
+    <section class="home-info">
+
+        <h2>
+            The Walking Dead Trivia and Frequently Asked Questions
+        </h2>
 
 
-            <h3>
-                Can I challenge my friends?
-            </h3>
+        <h3>
+            What are walkers in The Walking Dead?
+        </h3>
 
-            <p>
-                Yes. Use the Challenge Your Friends button
-                after completing the quiz and see if they can
-                beat your score.
-            </p>
+        <p>
+            Walkers are the reanimated dead that threaten the survivors.
+            The show uses several different names for them, including
+            walkers, biters and geeks, depending on the character or group
+            using the term. The word "zombie" is notably uncommon within
+            the show's own dialogue.
+        </p>
 
-        </section>
 
-    </div>
+        <h3>
+            What are some of the main communities in the series?
+        </h3>
+
+        <p>
+            Communities become increasingly important as the series
+            develops. Alexandria provides a protected residential
+            community, Hilltop becomes an important agricultural
+            settlement, and the Kingdom is led by Ezekiel. Other major
+            locations include Oceanside, the Sanctuary and the
+            Commonwealth, each with its own leadership, rules and
+            conflicts.
+        </p>
+
+
+        <h3>
+            Who are the major groups in The Walking Dead?
+        </h3>
+
+        <p>
+            The survivors encounter many organized groups throughout the
+            series. These include the Saviors led by Negan, the
+            Whisperers led by Alpha, the Scavengers associated with
+            Jadis, the Wolves and the Civic Republic Military. The
+            different groups demonstrate how societies can develop very
+            different rules and power structures after a collapse.
+        </p>
+
+
+        <h3>
+            Is The Walking Dead only about zombies?
+        </h3>
+
+        <p>
+            No. The walkers are a constant threat, but much of the story
+            focuses on human relationships, leadership, trust, survival,
+            morality and the rebuilding of society. Conflicts between
+            survivor groups often become just as important as the danger
+            posed by the dead.
+        </p>
+
+
+        <h3>
+            Does this quiz include the entire television series?
+        </h3>
+
+        <p>
+            The questions draw from a broad range of the television
+            series, including early Atlanta-era events, the prison,
+            Woodbury, Terminus, Alexandria, the Saviors, the Whisperers
+            and later communities such as the Commonwealth. The quiz
+            therefore includes both famous storylines and smaller details
+            from different seasons.
+        </p>
+
+
+        <h3>
+            Does the quiz include Walking Dead spin-offs?
+        </h3>
+
+        <p>
+            The main focus is the original television series. Some
+            questions may involve information connected to the wider
+            television universe, but this quiz is primarily designed for
+            viewers familiar with the original <em>The Walking Dead</em>
+            series.
+        </p>
+
+
+        <h3>
+            Can I take the quiz again?
+        </h3>
+
+        <p>
+            Yes. Select TRY AGAIN after completing the quiz to replay it.
+            Retaking the quiz can also reveal whether you remember the
+            smaller details that were easy to miss the first time.
+        </p>
+
+
+        <h3>
+            What score is considered a good result?
+        </h3>
+
+        <p>
+            A higher score means you remembered more of the show's
+            characters, locations, groups and events. Scores above 80
+            indicate strong knowledge, while very high scores suggest
+            that you remember many of the obscure details as well as the
+            major storylines.
+        </p>
+
+
+        <h3>
+            Can I challenge my friends?
+        </h3>
+
+        <p>
+            Yes. After completing the quiz, use the Challenge Your Friends
+            button to share your result. Comparing scores can be especially
+            competitive when everyone has watched the series multiple
+            times.
+        </p>
+
+    </section>
+
+</div>
 
 </main>
-
-
 
 <!-- =========================================================
      FOOTER
@@ -551,8 +615,6 @@
         </div>
     </div>
 </footer>
-
-
 
 <script src="script.js"></script>
 
