@@ -502,6 +502,7 @@ const questions = [
 
 ];
 
+
 let currentQuestion = 0;
 
 let selectedAnswers =
@@ -523,6 +524,9 @@ const resultScreen =
 
 const homeInfo =
     document.getElementById("home-info");
+
+const suggestionsCard =
+    document.getElementById("suggestions-card");
 
 
 const startButton =
@@ -605,13 +609,34 @@ function startQuiz() {
         new Array(questions.length).fill(null);
 
 
-    startScreen.classList.add("hidden");
+    startScreen.classList.add(
+        "hidden"
+    );
 
-    resultScreen.classList.add("hidden");
+    resultScreen.classList.add(
+        "hidden"
+    );
 
-    quizScreen.classList.remove("hidden");
+    quizScreen.classList.remove(
+        "hidden"
+    );
 
-    homeInfo.classList.add("hidden");
+    // Hide informational content while playing
+
+    homeInfo.classList.add(
+        "hidden"
+    );
+
+
+    // Hide suggested quizzes while playing
+
+    if (suggestionsCard) {
+
+        suggestionsCard.classList.add(
+            "hidden"
+        );
+
+    }
 
 
     showQuestion();
@@ -636,7 +661,8 @@ function showQuestion() {
         current.question;
 
 
-    answersContainer.innerHTML = "";
+    answersContainer.innerHTML =
+        "";
 
 
     const progress =
@@ -789,6 +815,8 @@ function selectAnswer(answerIndex) {
     updateNavigation();
 
 
+    // Automatically move to the next question
+
     if (
         currentQuestion <
         questions.length - 1
@@ -825,7 +853,7 @@ function selectAnswer(answerIndex) {
 
 
 // ===============================
-// NEXT BUTTON
+// NEXT / SUBMIT BUTTON
 // ===============================
 
 function goNext() {
@@ -998,30 +1026,135 @@ function calculateScore() {
 
 function showResult() {
 
+    // calculateScore() returns 0–100
+    // because every correct answer is worth 2 points
+
     const score =
         calculateScore();
 
 
-    homeInfo.classList.add(
-        "hidden"
-    );
+    const totalQuestions =
+        questions.length;
 
+
+    const correctAnswers =
+        score / 2;
+
+
+    const incorrectAnswers =
+        totalQuestions -
+        correctAnswers;
+
+
+    const accuracy =
+        Math.round(
+            (correctAnswers /
+                totalQuestions) * 100
+        );
+
+
+    // ===============================
+    // SHOW RESULT / RESTORE INFO
+    // ===============================
 
     quizScreen.classList.add(
         "hidden"
     );
-
 
     resultScreen.classList.remove(
         "hidden"
     );
 
 
+    // IMPORTANT:
+    // Info cards are visible on result page
+
+    homeInfo.classList.remove(
+        "hidden"
+    );
+
+
+    // Suggested quizzes are also visible on result page
+
+    if (suggestionsCard) {
+
+        suggestionsCard.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    // ===============================
+    // FINAL SCORE
+    // ===============================
+
     document.getElementById(
         "final-score"
     ).textContent =
         score;
 
+
+    // ===============================
+    // RESULT BREAKDOWN
+    // ===============================
+
+    const correctCount =
+        document.getElementById(
+            "correct-count"
+        );
+
+    const incorrectCount =
+        document.getElementById(
+            "incorrect-count"
+        );
+
+    const totalCount =
+        document.getElementById(
+            "total-count"
+        );
+
+    const accuracyPercent =
+        document.getElementById(
+            "accuracy-percent"
+        );
+
+
+    if (correctCount) {
+
+        correctCount.textContent =
+            correctAnswers;
+
+    }
+
+
+    if (incorrectCount) {
+
+        incorrectCount.textContent =
+            incorrectAnswers;
+
+    }
+
+
+    if (totalCount) {
+
+        totalCount.textContent =
+            totalQuestions;
+
+    }
+
+
+    if (accuracyPercent) {
+
+        accuracyPercent.textContent =
+            `${accuracy}%`;
+
+    }
+
+
+    // ===============================
+    // RESULT LEVEL
+    // ===============================
 
     let title;
     let description;
@@ -1121,6 +1254,10 @@ function showResult() {
     }
 
 
+    // ===============================
+    // UPDATE RESULT CONTENT
+    // ===============================
+
     document.getElementById(
         "result-title"
     ).textContent =
@@ -1153,9 +1290,17 @@ function showResult() {
     }
 
 
+    // ===============================
+    // COMPLETE PROGRESS BAR
+    // ===============================
+
     progressBar.style.width =
         "100%";
 
+
+    // ===============================
+    // SCROLL TO TOP
+    // ===============================
 
     window.scrollTo({
 
@@ -1181,6 +1326,8 @@ function restartQuiz() {
         new Array(questions.length).fill(null);
 
 
+    // Hide results
+
     resultScreen.classList.add(
         "hidden"
     );
@@ -1191,14 +1338,29 @@ function restartQuiz() {
     );
 
 
+    // Show start screen
+
     startScreen.classList.remove(
         "hidden"
     );
 
 
+    // Info cards visible on start page
+
     homeInfo.classList.remove(
         "hidden"
     );
+
+
+    // Hide suggested quizzes
+
+    if (suggestionsCard) {
+
+        suggestionsCard.classList.add(
+            "hidden"
+        );
+
+    }
 
 
     progressBar.style.width =
@@ -1240,6 +1402,10 @@ async function shareResult() {
         ).textContent;
 
 
+    const quizUrl =
+        "https://apocalypsequizzes.com/walking-dead-knowledge/";
+
+
     const shareText =
         `🧟 I scored ${finalScore}/100 on The Walking Dead Quiz!\n\n` +
         `${title}\n` +
@@ -1256,7 +1422,7 @@ async function shareResult() {
             shareText,
 
         url:
-            "https://apocalypsequizzes.com/walking-dead-quiz/"
+            quizUrl
 
     };
 
@@ -1273,7 +1439,8 @@ async function shareResult() {
 
             await navigator.clipboard.writeText(
                 shareText +
-                "\n\nhttps://apocalypsequizzes.com/walking-dead-quiz/"
+                "\n\n" +
+                quizUrl
             );
 
 
@@ -1293,86 +1460,137 @@ async function shareResult() {
 
 }
 
+
 // ===============================
 // GLOBAL SITE MENU
 // ===============================
 
-const menuToggle = document.getElementById("menu-toggle");
-const siteMenu = document.getElementById("site-menu");
+const menuToggle =
+    document.getElementById(
+        "menu-toggle"
+    );
 
-if (menuToggle && siteMenu) {
+const siteMenu =
+    document.getElementById(
+        "site-menu"
+    );
 
+
+if (
+    menuToggle &&
+    siteMenu
+) {
+
+
+    // ===============================
     // OPEN / CLOSE WITH HAMBURGER
-    menuToggle.addEventListener("click", function (event) {
+    // ===============================
 
-        event.stopPropagation();
+    menuToggle.addEventListener(
+        "click",
+        function (event) {
 
-        const isOpen =
-            menuToggle.getAttribute("aria-expanded") === "true";
-
-        siteMenu.hidden = isOpen;
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            String(!isOpen)
-        );
-
-        menuToggle.setAttribute(
-            "aria-label",
-            isOpen
-                ? "Open navigation"
-                : "Close navigation"
-        );
-
-    });
+            event.stopPropagation();
 
 
-    // CLOSE WHEN CLICKING OUTSIDE
-    document.addEventListener("click", function (event) {
+            const isOpen =
+                menuToggle.getAttribute(
+                    "aria-expanded"
+                ) === "true";
 
-        if (
-            !siteMenu.hidden &&
-            !siteMenu.contains(event.target) &&
-            !menuToggle.contains(event.target)
-        ) {
 
-            siteMenu.hidden = true;
+            siteMenu.hidden =
+                isOpen;
+
 
             menuToggle.setAttribute(
                 "aria-expanded",
-                "false"
+                String(!isOpen)
             );
+
 
             menuToggle.setAttribute(
                 "aria-label",
-                "Open navigation"
+                isOpen
+                    ? "Open navigation"
+                    : "Close navigation"
             );
 
         }
+    );
 
-    });
+
+    // ===============================
+    // CLOSE WHEN CLICKING OUTSIDE
+    // ===============================
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                !siteMenu.hidden &&
+                !siteMenu.contains(
+                    event.target
+                ) &&
+                !menuToggle.contains(
+                    event.target
+                )
+            ) {
+
+                siteMenu.hidden =
+                    true;
 
 
-    // CLOSE AFTER CLICKING A MENU LINK
-    siteMenu.querySelectorAll("a").forEach(function (link) {
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
 
-        link.addEventListener("click", function () {
 
-            siteMenu.hidden = true;
+                menuToggle.setAttribute(
+                    "aria-label",
+                    "Open navigation"
+                );
 
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+            }
 
-            menuToggle.setAttribute(
-                "aria-label",
-                "Open navigation"
-            );
+        }
+    );
 
-        });
 
-    });
+    // ===============================
+    // CLOSE AFTER CLICKING MENU LINK
+    // ===============================
+
+    siteMenu
+        .querySelectorAll("a")
+        .forEach(
+            function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        siteMenu.hidden =
+                            true;
+
+
+                        menuToggle.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+
+                        menuToggle.setAttribute(
+                            "aria-label",
+                            "Open navigation"
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 }
-
